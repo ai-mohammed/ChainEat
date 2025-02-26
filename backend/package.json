@@ -10,19 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    // dependencies from the code
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-
-    // dependencies for authentication & sessions
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "express-session": "^1.17.3",
     "express-validator": "^7.2.1",
     "connect-mongo": "^4.6.0",
-
-    // Mongoose is here 
     "mongoose": "^8.10.1"
   }
 }
