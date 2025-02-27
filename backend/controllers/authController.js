@@ -1,5 +1,3 @@
-// controllers/authController.js
-
 // Import our User model
 const User = require("../models/User");
 // Import validationResult to check for validation errors

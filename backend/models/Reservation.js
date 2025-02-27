@@ -1,5 +1,6 @@
+// Initialize mongoose
 const mongoose = require("mongoose");
-
+// Define the reservation schema with user, restaurant, reservationDate, numberOfGuests, status, and createdAt
 const reservationSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -29,5 +30,5 @@ const reservationSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-
+// Export the model
 module.exports = mongoose.model("Reservation", reservationSchema);

@@ -1,5 +1,6 @@
+// Initialize mongoose
 const mongoose = require("mongoose");
-
+// create restaurant schema with name, address, cuisine, rating, and description
 const restaurantSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -21,5 +22,5 @@ const restaurantSchema = new mongoose.Schema({
     type: String,
   },
 });
-
+// Export the model
 module.exports = mongoose.model("Restaurant", restaurantSchema);

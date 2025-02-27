@@ -1,5 +1,3 @@
-// models/User.js
-
 // Import mongoose to define our user schema and model
 const mongoose = require("mongoose");
 // Import bcrypt to hash and compare passwords securely

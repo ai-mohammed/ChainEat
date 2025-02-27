@@ -10,14 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "backend": "file:",
+    "bcrypt": "^5.1.0",
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "bcrypt": "^5.1.0",
-    "cookie-parser": "^1.4.6",
     "express-session": "^1.17.3",
     "express-validator": "^7.2.1",
-    "connect-mongo": "^4.6.0",
     "mongoose": "^8.10.1"
   }
 }

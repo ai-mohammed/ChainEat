@@ -1,27 +1,26 @@
-// backend/server.js
-
-// 1) Load environment variables
+// Load the environment variables
 require("dotenv").config();
 
-// 2) Import express
+// import the express package
 const express = require("express");
+// create an express application
 const app = express();
 
-// 3) Import the db connection (which runs mongoose.connect in db.js)
+// Import the db connection (which runs mongoose.connect in db.js)
 const db = require("./db");
 
-// 4) Import additional dependencies for sessions
+// Import additional dependencies for sessions
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo");
 
-// 5) Middleware to parse JSON request bodies
+// Middleware to parse JSON request bodies
 app.use(express.json());
 
-// 6) Parse incoming cookies
+// Parse incoming cookies
 app.use(cookieParser());
 
-// 7) Configure session
+// Configure session
 app.use(
   session({
     // Use an environment variable for security
@@ -30,31 +29,31 @@ app.use(
     saveUninitialized: false, // Don't create session until something stored
     store: MongoStore.create({
       // Use the same Mongo URI from your db.js (or client)
-      mongoUrl: process.env.MONGO_URI
+      mongoUrl: process.env.MONGO_URI,
     }),
     cookie: {
       // Session expires in 1 hour (in milliseconds)
-      maxAge: 1000 * 60 * 60
-    }
+      maxAge: 1000 * 60 * 60,
+    },
   })
 );
 
-// 8) Import your existing restaurant routes
+// Import restaurant routes
 const restaurantRoutes = require("./routes/restaurantRoutes");
-// 9) Import the newly created auth routes
+// Import the auth routes
 const authRoutes = require("./routes/authRoutes");
 
-// 10) Mount the routes
+// Mount the routes
 app.use("/restaurants", restaurantRoutes);
 app.use("/auth", authRoutes);
 
-// 11) Simple home route or test route
+// Simple home route or test route
 app.get("/", (req, res) => {
   res.send("Welcome to the ChainEats backend!");
 });
 
-// 12) Start the server on a port from .env
-const PORT = process.env.PORT || 3000;
+// Start the server on a port from .env
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

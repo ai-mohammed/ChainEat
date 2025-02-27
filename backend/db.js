@@ -1,3 +1,5 @@
+// initialize the connection to the database
+// Import the mongoose package
 const mongoose = require("mongoose");
 
 // Use an environment variable for the connection string for security.

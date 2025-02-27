@@ -7,7 +7,14 @@ const router = express.Router();
 const { body } = require("express-validator");
 
 // Import our auth controller
-const { registerUser, loginUser, logoutUser } = require("../controllers/authController");
+const {
+  registerUser,
+  loginUser,
+  logoutUser,
+} = require("../controllers/authController");
+
+// Import our user controller
+const { getAllUsers } = require("../controllers/userController");
 
 // Validation rules for registration
 // - Ensure email is valid, password has at least 6 chars, etc.
@@ -36,6 +43,9 @@ router.post("/login", loginValidation, loginUser);
 
 // Route to log out
 router.get("/logout", logoutUser);
+
+// Route to get all users
+router.get("/users", getAllUsers);
 
 // Export the router to be used in server.js
 module.exports = router;
