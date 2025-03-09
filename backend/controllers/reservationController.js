@@ -10,12 +10,13 @@ exports.createReservation = async (req, res) => {
       return res.status(404).json({ error: "Restaurant not found" });
     }
 
+    const reservationDatetime = new Date(`${date}T${time}`);
+
     const newReservation = await Reservation.create({
       user: req.session.user.id,
       restaurant: restaurantId,
-      date,
-      time,
-      guests,
+      reservationDate: reservationDatetime,
+      numberOfGuests: guests,
     });
 
     res.status(201).json(newReservation);
@@ -31,7 +32,9 @@ exports.getUserReservations = async (req, res) => {
       return res.status(403).json({ error: "Access denied." });
     }
 
-    const reservations = await Reservation.find({ user: req.session.user.id }).populate("restaurant");
+    const reservations = await Reservation.find({
+      user: req.session.user.id,
+    }).populate("restaurant");
     res.status(200).json(reservations);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -45,7 +48,9 @@ exports.getAllReservations = async (req, res) => {
       return res.status(403).json({ error: "Access denied." });
     }
 
-    const reservations = await Reservation.find().populate("user").populate("restaurant");
+    const reservations = await Reservation.find()
+      .populate("user")
+      .populate("restaurant");
     res.status(200).json(reservations);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -59,10 +64,14 @@ exports.updateReservation = async (req, res) => {
       return res.status(403).json({ error: "Access denied." });
     }
 
-    const updatedReservation = await Reservation.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const updatedReservation = await Reservation.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     if (!updatedReservation) {
       return res.status(404).json({ error: "Reservation not found" });
@@ -81,7 +90,9 @@ exports.deleteReservation = async (req, res) => {
       return res.status(403).json({ error: "Access denied." });
     }
 
-    const deletedReservation = await Reservation.findByIdAndDelete(req.params.id);
+    const deletedReservation = await Reservation.findByIdAndDelete(
+      req.params.id
+    );
     if (!deletedReservation) {
       return res.status(404).json({ error: "Reservation not found" });
     }

@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(
   session({
     // Use an environment variable for security
-    secret: process.env.SESSION_SECRET || "someSecretKey",
+    secret: process.env.SESSION_SECRET,
     resave: false, // Don't save session if not modified
     saveUninitialized: false, // Don't create session until something stored
     store: MongoStore.create({
@@ -42,10 +42,13 @@ app.use(
 const restaurantRoutes = require("./routes/restaurantRoutes");
 // Import the auth routes
 const authRoutes = require("./routes/authRoutes");
+// Import the reservation routes
+const reservationRoutes = require("./routes/reservationRoutes");
 
 // Mount the routes
 app.use("/restaurants", restaurantRoutes);
 app.use("/auth", authRoutes);
+app.use("/reservations", reservationRoutes);
 
 // Simple home route or test route
 app.get("/", (req, res) => {
