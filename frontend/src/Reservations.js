@@ -10,7 +10,7 @@ const Reservations = () => {
 
   useEffect(() => {
     axios
-      .get("https://chaineat-nean.onrender.com/reservations/my", {
+      .get("https://chaineat-9acv.onrender.com/reservations/my", {
         withCredentials: true,
       })
       .then((response) => setReservations(response.data))
