@@ -1,9 +1,9 @@
 // Load the environment variables
 require("dotenv").config();
 
-// import the express package
+// Import the express package
 const express = require("express");
-// create an express application
+// Create an express application
 const app = express();
 
 // Import the db connection (which runs mongoose.connect in db.js)
@@ -13,6 +13,15 @@ const db = require("./db");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo");
+const cors = require("cors"); // <-- Add this line
+
+// Enable CORS (must be before routes)
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Allow frontend requests
+    credentials: true, // Allow cookies/sessions
+  })
+);
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
@@ -56,7 +65,7 @@ app.get("/", (req, res) => {
 });
 
 // Start the server on a port from .env
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

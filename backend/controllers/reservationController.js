@@ -28,10 +28,6 @@ exports.createReservation = async (req, res) => {
 // Get reservations for logged-in user (Customers)
 exports.getUserReservations = async (req, res) => {
   try {
-    if (req.session.user.role !== "customer") {
-      return res.status(403).json({ error: "Access denied." });
-    }
-
     const reservations = await Reservation.find({
       user: req.session.user.id,
     }).populate("restaurant");
@@ -44,10 +40,6 @@ exports.getUserReservations = async (req, res) => {
 // Get all reservations (Managers/Admins)
 exports.getAllReservations = async (req, res) => {
   try {
-    if (!["manager", "admin"].includes(req.session.user.role)) {
-      return res.status(403).json({ error: "Access denied." });
-    }
-
     const reservations = await Reservation.find()
       .populate("user")
       .populate("restaurant");
@@ -60,10 +52,6 @@ exports.getAllReservations = async (req, res) => {
 // Update a reservation (Only Admins)
 exports.updateReservation = async (req, res) => {
   try {
-    if (req.session.user.role !== "admin") {
-      return res.status(403).json({ error: "Access denied." });
-    }
-
     const updatedReservation = await Reservation.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -86,10 +74,6 @@ exports.updateReservation = async (req, res) => {
 // Delete a reservation (Only Admins)
 exports.deleteReservation = async (req, res) => {
   try {
-    if (req.session.user.role !== "admin") {
-      return res.status(403).json({ error: "Access denied." });
-    }
-
     const deletedReservation = await Reservation.findByIdAndDelete(
       req.params.id
     );

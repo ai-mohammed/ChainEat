@@ -13,7 +13,7 @@ exports.registerUser = async (req, res) => {
     }
 
     // Destructure email and password from the request body
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     // Check if a user with this email already exists
     const existingUser = await User.findOne({ email });
@@ -21,8 +21,18 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ msg: "Email is already in use." });
     }
 
+    // Default role is 'user', only an admin can create another admin
+    let assignedRole = "user";
+    if (
+      role === "admin" &&
+      req.session.user &&
+      req.session.user.role === "admin"
+    ) {
+      assignedRole = "admin";
+    }
+
     // Create a new user instance
-    const newUser = new User({ email, password });
+    const newUser = new User({ email, password, role: assignedRole });
 
     // Save user to the database (password gets hashed via our pre-save hook)
     await newUser.save();

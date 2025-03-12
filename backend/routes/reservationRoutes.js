@@ -2,6 +2,7 @@ const express = require("express");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
 const reservationController = require("../controllers/reservationController");
+const { isAuthenticated, isAdmin } = require("../middlewares/authMiddleware");
 
 // Validation middleware
 const validateReservation = [
@@ -19,15 +20,20 @@ const validateReservation = [
 ];
 
 // Customer Routes
-router.post("/", validateReservation, reservationController.createReservation);
+
+// Users must be logged in to create a reservation
+router.post("/", isAuthenticated, reservationController.createReservation);
 router.get("/my", reservationController.getUserReservations);
 
 // Manager/Admin Routes
-router.get("/", reservationController.getAllReservations);
+router.get("/", isAuthenticated, isAdmin,reservationController.getAllReservations);
 
-// Admin Routes
-router.put("/:id", reservationController.updateReservation);
-router.delete("/:id", reservationController.deleteReservation);
+//admins
+// Only admins can update reservations
+router.put("/:id", isAuthenticated, isAdmin, reservationController.updateReservation);
+
+// Only admins can delete reservations
+router.delete("/:id", isAuthenticated, isAdmin, reservationController.deleteReservation);
 
 module.exports = router;
 
