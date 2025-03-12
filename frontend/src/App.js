@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import "./App.css";
 
-const API_BASE = "https://chaineat.onrender.com";
+const API_BASE = "https://chaineat-nean.onrender.com";
 
 function App() {
   const [user, setUser] = useState(null);
