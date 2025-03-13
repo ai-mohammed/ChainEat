@@ -6,7 +6,7 @@ const RateRestaurant = ({ restaurantId }) => {
 
   const handleRate = async () => {
     try {
-      await axios.post("https://chaineat-9acv.onrender.com/restaurants/rate", {
+      await axios.post("http://localhost:5000/restaurants/rate", {
         restaurantId,
         rating,
       });

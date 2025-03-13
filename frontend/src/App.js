@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import "./App.css";
 
-const API_BASE = "https://chaineat-9acv.onrender.com";
+const API_BASE = "http://localhost:5000";
 
 function App() {
   const [user, setUser] = useState(null);

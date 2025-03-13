@@ -10,7 +10,7 @@ const Reservations = () => {
 
   useEffect(() => {
     axios
-      .get("https://chaineat-9acv.onrender.com/reservations/my", {
+      .get("http://localhost:5000/reservations/my", {
         withCredentials: true,
       })
       .then((response) => setReservations(response.data))
@@ -20,7 +20,7 @@ const Reservations = () => {
   const makeReservation = async () => {
     try {
       await axios.post(
-        "https://chaineat-nean.onrender.com/reservations",
+        "http://localhost:5000/reservations",
         {
           restaurantId,
           date: date,

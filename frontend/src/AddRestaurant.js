@@ -9,7 +9,7 @@ const AddRestaurant = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://chaineat-9acv.onrender.com/restaurants/add", {
+      await axios.post("http://localhost:5000/restaurants/add", {
         name,
         address,
         cuisine,
