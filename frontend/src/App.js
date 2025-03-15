@@ -9,12 +9,14 @@ import {
 import axios from "axios";
 import "./App.css";
 
+// Base URL for backend API
 const API_BASE = "https://chaineat-9acv.onrender.com";
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Prevent UI flickering
+  const [user, setUser] = useState(null); // State to track logged-in user
+  const [loading, setLoading] = useState(true); // Prevent UI flickering before fetching user data
 
+  // Fetch current user data from backend (session-based authentication)
   useEffect(() => {
     axios
       .get(`${API_BASE}/auth/users`, { withCredentials: true })
@@ -32,12 +34,13 @@ function App() {
       });
   }, []);
 
+  // Logout function
   const logout = async () => {
     await axios.get(`${API_BASE}/auth/logout`, { withCredentials: true });
     setUser(null);
   };
 
-  // Show "Loading..." to prevent UI flickering
+  // Display "Loading..." while fetching user session data
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -74,6 +77,7 @@ function App() {
         </div>
       </nav>
 
+      {/* Routes for different pages */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login setUser={setUser} />} />
@@ -90,6 +94,7 @@ function App() {
   );
 }
 
+/* Home Page Component */
 const Home = () => (
   <div className="home-container">
     <h1>
@@ -99,10 +104,12 @@ const Home = () => (
   </div>
 );
 
+/* Login Component */
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Handle login request
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -138,10 +145,12 @@ const Login = ({ setUser }) => {
   );
 };
 
+/* Register Component */
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Handle registration request
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
@@ -173,9 +182,12 @@ const Register = () => {
   );
 };
 
+
+/* Restaurants List Component */
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
 
+  // Fetch restaurants from backend API
   useEffect(() => {
     axios
       .get(`${API_BASE}/restaurants`)
@@ -197,9 +209,11 @@ const Restaurants = () => {
   );
 };
 
+/* Reservations List Component */
 const Reservations = ({ user }) => {
   const [reservations, setReservations] = useState([]);
 
+  // Fetch user's reservations from backend API
   useEffect(() => {
     axios
       .get(`${API_BASE}/reservations/my`, { withCredentials: true })
