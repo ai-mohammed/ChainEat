@@ -25,7 +25,7 @@ This backend application is built using **Node.js**, **Express**, **MongoDB**, a
 ├── controllers
 │   ├── authController.js
 |   ├── reservationController.js
-|   ├── resetaurantController.js
+|   ├── restaurantController.js
 │   └── userController.js
 ├── models
 │   ├── User.js
