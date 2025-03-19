@@ -90,6 +90,9 @@ function App() {
           }
         />
       </Routes>
+
+      {/* Footer */}
+      <Footer />
     </Router>
   );
 }
@@ -104,136 +107,25 @@ const Home = () => (
   </div>
 );
 
-/* Login Component */
-const Login = ({ setUser }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  // Handle login request
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post(
-        `${API_BASE}/auth/login`,
-        { email, password },
-        { withCredentials: true }
-      );
-      setUser(res.data);
-    } catch (err) {
-      alert("Login failed");
-    }
-  };
-
-  return (
-    <form className="auth-form" onSubmit={handleLogin}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <button type="submit">Login</button>
-    </form>
-  );
-};
-
-/* Register Component */
-const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  // Handle registration request
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`${API_BASE}/auth/register`, { email, password });
-      alert("Registered successfully");
-    } catch (err) {
-      alert("Registration failed");
-    }
-  };
-
-  return (
-    <form className="auth-form" onSubmit={handleRegister}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <button type="submit">Register</button>
-    </form>
-  );
-};
-
-
-/* Restaurants List Component */
-const Restaurants = () => {
-  const [restaurants, setRestaurants] = useState([]);
-
-  // Fetch restaurants from backend API
-  useEffect(() => {
-    axios
-      .get(`${API_BASE}/restaurants`)
-      .then((response) => setRestaurants(response.data))
-      .catch((err) => console.error(err));
-  }, []);
-
-  return (
-    <div className="restaurants-container">
-      <h2>Restaurants</h2>
-      <ul>
-        {restaurants.map((r) => (
-          <li key={r._id}>
-            {r.name} - {r.cuisine}
-          </li>
-        ))}
-      </ul>
+/* Footer Component */
+const Footer = () => (
+  <footer className="footer">
+    <div className="footer-content">
+      <div className="footer-left">
+        <h2>🍽️ <span className="bold">ChainEats</span></h2>
+        <p>Discover and book the best restaurants in your city with ease.</p>
+        <div className="social-icons">
+          <a href="#"><i className="fab fa-twitter"></i></a>
+          <a href="#"><i className="fab fa-facebook"></i></a>
+          <a href="#"><i className="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div className="footer-right">
+        <h3>About Us</h3>
+        <p>ChainEats connects food lovers with top restaurants, offering seamless reservations and an enhanced dining experience.</p>
+      </div>
     </div>
-  );
-};
-
-/* Reservations List Component */
-const Reservations = ({ user }) => {
-  const [reservations, setReservations] = useState([]);
-
-  // Fetch user's reservations from backend API
-  useEffect(() => {
-    axios
-      .get(`${API_BASE}/reservations/my`, { withCredentials: true })
-      .then((response) => setReservations(response.data))
-      .catch((err) => console.error(err));
-  }, []);
-
-  return (
-    <div className="reservations-container">
-      <h2>My Reservations</h2>
-      <ul>
-        {reservations.map((r) => (
-          <li key={r._id}>
-            {r.restaurant.name} -{" "}
-            {new Date(r.reservationDate).toLocaleDateString()}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+  </footer>
+);
 
 export default App;
