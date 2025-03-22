@@ -4,7 +4,7 @@
 ChainEats is a web-based application designed to streamline the dining experience across multiple restaurant locations. Unlike traditional single-restaurant apps, ChainEats allows users to explore a network of restaurants, make reservations, browse menus, post reviews, and participate in a loyalty program.
 
 ## Technologies Used
-- **Frontend:** [ChainEats Frontend](https://chain-eat.vercel.app/) (React.js)
+- **Frontend:** [ChainEats Frontend](https://chain-ivgcco40j-ai-mohammeds-projects.vercel.app/) (React.js)
 - **Backend:** [ChainEats Backend](https://chaineat-9acv.onrender.com) (Node.js & Express.js)
 - **Database:** MongoDB
 
