@@ -1,15 +1,54 @@
+/* General body styling */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f4f9;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
+/* Ensure the root container takes full viewport height */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Ensure main content fills remaining space */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden; /* Prevent unnecessary scrollbars */
+}
+
+/* Navbar styling */
 .navbar {
   background-color: #333;
-  padding: 15px;
+  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-right {
+  display: flex;
   align-items: center;
 }
 
@@ -18,87 +57,268 @@ body {
   text-decoration: none;
   margin: 0 15px;
   font-size: 18px;
+  transition: 0.3s;
+  white-space: nowrap;
 }
 
-.nav-right {
-  display: flex;
-  align-items: center;
-}
-
-.logout-button {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 5px;
-}
-
-.register-button {
-  background-color: green;
-  padding: 8px 12px;
-  color: white;
-  border-radius: 5px;
-}
-
-.home-container {
-  text-align: center;
-  margin-top: 50px;
-}
-
-.highlight {
+.nav-link:hover {
   color: #ff6600;
 }
 
-.auth-form {
-  width: 300px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.auth-form input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.auth-form button {
-  width: 100%;
-  padding: 10px;
-  background-color: #28a745;
+.logout-button, .register-button {
+  background-color: #ff6600;
   color: white;
   border: none;
-  font-size: 16px;
+  padding: 8px 12px;
   cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: 0.3s;
 }
 
-.auth-form button:hover {
-  background-color: #218838;
+.logout-button:hover, .register-button:hover {
+  background-color: #e65c00;
 }
 
-.restaurants-container, .reservations-container {
-  width: 60%;
-  margin: 30px auto;
-  background: white;
+/* Hero Section */
+.hero-section {
+  background-image: url('fond.png');
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  width: 100%;
+}
+
+/* Dark overlay for readability */
+.hero-content {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 10px;
+  max-width: 80%;
+}
+
+/* Call-to-action button */
+.cta-button {
+  background-color: #ff6600;
+  color: white;
+  padding: 12px 20px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.cta-button:hover {
+  background-color: #e65c00;
+}
+
+/* Footer Styling */
+.footer {
+  background-color: #222;
+  color: white;
+  text-align: center;
   padding: 20px;
+  width: 100%;
+  position: relative;
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 15px;
+  }
+}
+  
+.footer-content h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.footer-content p {
+  font-size: 16px;
+  color: #ccc;
+}
+
+/* Footer Links */
+.footer-links {
+  margin-top: 15px;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.footer-links a:hover {
+  color: #ff6600;
+}
+
+/* Social Media Icons */
+.social-icons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.social-icons i {
+  font-size: 22px;
+  margin: 0 10px;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s;
+}
+
+.social-icons i:hover {
+  color: #ff6600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 60vh;
+  }
+
+  .hero-content {
+    max-width: 90%;
+    font-size: 14px;
+    padding: 20px;
+  }
+
+  .cta-button {
+    font-size: 16px;
+    padding: 10px 15px;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-right {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer {
+    text-align: center;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 480px) {
+  .hero-section {
+    height: 50vh;
+  }
+
+  .hero-content {
+    max-width: 95%;
+    font-size: 12px;
+    padding: 15px;
+  }
+
+  .cta-button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .nav-link {
+    font-size: 16px;
+  }
+}
+
+/* About Us Page */
+.about-container {
+  text-align: center;
+  padding: 50px;
+  background-color: #f4f4f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Title */
+.about-title {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+/* Description */
+.about-description {
+  font-size: 18px;
+  color: #555;
+  max-width: 600px;
+  margin-bottom: 30px;
+}
+
+/* Team Grid */
+.team-grid {
+  display: flex;
+  justify-content: center; /* Centers the team members */
+  align-items: center;
+  flex-wrap: nowrap; /* Prevents wrapping to a new line */
+  gap: 20px; /* Space between members */
+  width: 80%;
+  max-width: 1000px;
+}
+
+
+/* Individual Team Member Box */
+.team-member {
+  background: white;
   border-radius: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+.team-member:hover {
+  transform: scale(1.05);
 }
 
-li {
-  background: #e9ecef;
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 5px;
+/* Team Member Image */
+.team-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+/* Team Member Name */
+.team-name {
+  color: #ff6600;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+/* Team Member Role */
+.team-role {
+  color: #555;
+  font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(150px, 1fr)); /* Two columns on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .team-grid {
+    grid-template-columns: repeat(1, minmax(150px, 1fr)); /* One column on mobile */
+  }
 }
