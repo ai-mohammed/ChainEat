@@ -1,8 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
+type Reservation = {
+  _id: string;
+  reservationDate: string;
+  status: string;
+  restaurant: {
+    name: string;
+  };
+};
+
 const Reservations = () => {
-  const [reservations, setReservations] = useState([]);
+  const [reservations, setReservations] = useState<Reservation[]>([]);
   const [restaurantId, setRestaurantId] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -13,7 +22,7 @@ const Reservations = () => {
       .get("http://localhost:5000/reservations/my", {
         withCredentials: true,
       })
-      .then((response) => setReservations(response.data))
+      .then((res) => setReservations(res.data))
       .catch((err) => console.error(err));
   }, []);
 
@@ -23,16 +32,15 @@ const Reservations = () => {
         "http://localhost:5000/reservations",
         {
           restaurantId,
-          date: date,
-          time: time,
-          guests: guests,
+          date,
+          time,
+          guests,
         },
         { withCredentials: true }
       );
-
       alert("Reservation successful!");
-    } catch (err) {
-      alert("Reservation failed: " + err.response.data.errors[0].msg);
+    } catch (err: any) {
+      alert("Reservation failed: " + err?.response?.data?.errors?.[0]?.msg);
     }
   };
 

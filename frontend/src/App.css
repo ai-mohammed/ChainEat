@@ -1,104 +1,120 @@
+/* General body styling */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
-  margin: 0;
-  padding: 0;
+  font-family: Arial, sans-serif; /* Sets the font for the whole page */
+  background-color: #f8f9fa; /* Light gray background */
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
 }
 
+/* Navbar styling */
 .navbar {
-  background-color: #333;
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background-color: #333; /* Dark background */
+  padding: 15px; /* Adds padding around navbar */
+  display: flex; /* Uses flexbox for layout */
+  justify-content: space-between; /* Spaces out navbar elements */
+  align-items: center; /* Centers items vertically */
 }
 
+/* Styling for navigation links */
 .nav-link {
-  color: white;
-  text-decoration: none;
-  margin: 0 15px;
-  font-size: 18px;
+  color: white; /* White text */
+  text-decoration: none; /* Removes underline */
+  margin: 0 15px; /* Adds spacing between links */
+  font-size: 18px; /* Sets font size */
 }
 
+/* Right-side section of navbar */
 .nav-right {
-  display: flex;
-  align-items: center;
+  display: flex; /* Aligns items horizontally */
+  align-items: center; /* Centers vertically */
 }
 
+/* Logout button styling */
 .logout-button {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 5px;
+  background-color: red; /* Red background */
+  color: white; /* White text */
+  border: none; /* Removes border */
+  padding: 8px 12px; /* Adds padding */
+  cursor: pointer; /* Changes cursor to pointer */
+  font-size: 16px; /* Sets font size */
+  border-radius: 5px; /* Rounds button corners */
 }
 
+/* Register button styling */
 .register-button {
-  background-color: green;
-  padding: 8px 12px;
-  color: white;
-  border-radius: 5px;
+  background-color: green; /* Green background */
+  padding: 8px 12px; /* Adds padding */
+  color: white; /* White text */
+  border-radius: 5px; /* Rounds button corners */
 }
 
+/* Centered home page container */
 .home-container {
-  text-align: center;
-  margin-top: 50px;
+  text-align: center; /* Centers text */
+  margin-top: 50px; /* Adds margin from top */
 }
 
+/* Highlighted text style */
 .highlight {
-  color: #ff6600;
+  color: #ff6600; /* Orange color */
 }
 
+/* Form container for login/register */
 .auth-form {
-  width: 300px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 300px; /* Fixed width */
+  margin: 50px auto; /* Centers form horizontally */
+  padding: 20px; /* Adds padding */
+  background-color: white; /* White background */
+  border-radius: 8px; /* Rounds corners */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds subtle shadow */
 }
 
+/* Input fields inside auth form */
 .auth-form input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  width: 100%; /* Full width */
+  padding: 10px; /* Adds padding */
+  margin: 10px 0; /* Adds margin between fields */
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 5px; /* Rounds input corners */
 }
 
+/* Submit button inside auth form */
 .auth-form button {
-  width: 100%;
-  padding: 10px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
+  width: 100%; /* Full width */
+  padding: 10px; /* Adds padding */
+  background-color: #28a745; /* Green background */
+  color: white; /* White text */
+  border: none; /* Removes border */
+  font-size: 16px; /* Sets font size */
+  cursor: pointer; /* Changes cursor to pointer */
 }
 
+/* Hover effect for auth form button */
 .auth-form button:hover {
-  background-color: #218838;
+  background-color: #218838; /* Darker green on hover */
 }
 
-.restaurants-container, .reservations-container {
-  width: 60%;
-  margin: 30px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+/* Containers for restaurant and reservation lists */
+.restaurants-container,
+.reservations-container {
+  width: 60%; /* Sets width */
+  margin: 30px auto; /* Centers container */
+  background: white; /* White background */
+  padding: 20px; /* Adds padding */
+  border-radius: 10px; /* Rounds corners */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds subtle shadow */
 }
 
+/* Remove default list styling */
 ul {
   list-style: none;
   padding: 0;
 }
 
+/* Individual list items for restaurants and reservations */
 li {
-  background: #e9ecef;
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 5px;
+  background: #e9ecef; /* Light gray background */
+  margin: 5px 0; /* Adds space between items */
+  padding: 10px; /* Adds padding */
+  border-radius: 5px; /* Rounds corners */
 }

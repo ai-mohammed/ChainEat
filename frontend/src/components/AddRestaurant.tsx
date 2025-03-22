@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const AddRestaurant = () => {
@@ -6,7 +6,7 @@ const AddRestaurant = () => {
   const [address, setAddress] = useState("");
   const [cuisine, setCuisine] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:5000/restaurants/add", {
@@ -15,7 +15,7 @@ const AddRestaurant = () => {
         cuisine,
       });
       alert("Restaurant added successfully!");
-    } catch (err) {
+    } catch {
       alert("Failed to add restaurant");
     }
   };
