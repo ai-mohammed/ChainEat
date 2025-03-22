@@ -22,13 +22,13 @@ const Restaurants = () => {
     // Fetch all restaurants
     axios
       .get("http://localhost:5000/restaurants")
-      .then((res) => setRestaurants(res.data))
+      .then((res) => setRestaurants(res.data as Restaurant[]))
       .catch((err) => console.error(err));
 
     // Fetch current logged-in user (to determine if admin)
     axios
       .get("http://localhost:5000/auth/me", { withCredentials: true })
-      .then((res) => setUser(res.data))
+      .then((res) => setUser(res.data as User))
       .catch(() => setUser(null));
   }, []);
 

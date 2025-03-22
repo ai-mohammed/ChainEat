@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 type Props = {
-  setUser: (user: { email: string; role: string }) => void; // ✅ Added role
+  setUser: (user: { email: string; role: string }) => void; // Added role
 };
 
 const Login = ({ setUser }: Props) => {
@@ -20,7 +20,7 @@ const Login = ({ setUser }: Props) => {
         { withCredentials: true }
       );
 
-      setUser({ email: res.data.email, role: res.data.role }); // ✅ added role explicitly
+      setUser({ email: (res.data as any).email, role: (res.data as any).role }); //added role explicitly
     } catch (err: any) {
       alert(err?.response?.data?.message || "Login failed");
     } finally {

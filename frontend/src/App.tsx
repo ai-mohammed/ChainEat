@@ -27,7 +27,7 @@ function App() {
     axios
       .get(`${API_BASE}/auth/me`, { withCredentials: true })
       .then((res) => {
-        setUser(res.data || null); // Now has { email, role }
+        setUser(res.data as User | null); // Now has { email, role }
         setLoading(false);
       })
       .catch(() => {

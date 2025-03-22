@@ -22,7 +22,7 @@ const Reservations = () => {
       .get("http://localhost:5000/reservations/my", {
         withCredentials: true,
       })
-      .then((res) => setReservations(res.data))
+      .then((res) => setReservations(res.data as Reservation[]))
       .catch((err) => console.error(err));
   }, []);
 

@@ -25,6 +25,8 @@
     "vite": "^6.2.0"
   },
   "dependencies": {
-    "frontend": "file:"
+    "axios": "^1.8.4",
+    "frontend": "file:",
+    "react-router-dom": "^6.30.0"
   }
 }
