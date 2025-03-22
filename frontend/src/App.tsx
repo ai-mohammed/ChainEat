@@ -11,7 +11,6 @@ import Reservations from "./components/Reservations";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/ContactUs";
 import Footer from "./components/Footer";
-import AddRestaurant from "./components/AddRestaurant"; // Add your admin component
 
 type User = {
   email: string;
