@@ -46,6 +46,13 @@ router.get("/logout", logoutUser);
 
 // Route to get all users
 router.get("/users", getAllUsers);
+// Route to get the currently logged-in user
+router.get("/me", (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: "Not logged in" });
+  }
+  res.json(req.session.user);
+});
 
 // Export the router to be used in server.js
 module.exports = router;

@@ -21,6 +21,16 @@ const restaurantSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  ratingCount: {
+    type: Number,
+    default: 0,
+  },
+  userRatings: [
+    {
+      userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      rating: Number,
+    },
+  ],
 });
 // Export the model
 module.exports = mongoose.model("Restaurant", restaurantSchema);

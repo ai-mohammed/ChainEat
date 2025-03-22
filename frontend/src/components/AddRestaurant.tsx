@@ -9,14 +9,22 @@ const AddRestaurant = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/restaurants/add", {
-        name,
-        address,
-        cuisine,
-      });
+      await axios.post(
+        "http://localhost:5000/restaurants", // ✅ fixed endpoint
+        {
+          name,
+          address,
+          cuisine,
+        },
+        { withCredentials: true }
+      );
       alert("Restaurant added successfully!");
-    } catch {
-      alert("Failed to add restaurant");
+      setName("");
+      setAddress("");
+      setCuisine("");
+    } catch (err: any) {
+      console.error(err);
+      alert(err?.response?.data?.error || "Failed to add restaurant");
     }
   };
 

@@ -9,14 +9,27 @@ type Restaurant = {
   cuisine: string;
 };
 
+type User = {
+  email: string;
+  role: string;
+};
+
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
+    // Fetch all restaurants
     axios
       .get("http://localhost:5000/restaurants")
       .then((res) => setRestaurants(res.data))
       .catch((err) => console.error(err));
+
+    // Fetch current logged-in user (to determine if admin)
+    axios
+      .get("http://localhost:5000/auth/me", { withCredentials: true })
+      .then((res) => setUser(res.data))
+      .catch(() => setUser(null));
   }, []);
 
   return (
@@ -30,7 +43,9 @@ const Restaurants = () => {
           </li>
         ))}
       </ul>
-      <AddRestaurant />
+
+      {/* 👇 Conditionally render AddRestaurant only for admin */}
+      {user?.role === "admin" && <AddRestaurant />}
     </div>
   );
 };
