@@ -1,6 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 
+type AxiosCustomError = {
+  response?: {
+    data?: {
+      error?: string;
+    };
+  };
+};
 const AddRestaurant = () => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -22,9 +29,10 @@ const AddRestaurant = () => {
       setName("");
       setAddress("");
       setCuisine("");
-    } catch (err: any) {
-      console.error(err);
-      alert(err?.response?.data?.error || "Failed to add restaurant");
+    } catch (err) {
+      const error = err as AxiosCustomError; // clearly typed
+      console.error(error);
+      alert(error.response?.data?.error || "Failed to add restaurant");
     }
   };
 

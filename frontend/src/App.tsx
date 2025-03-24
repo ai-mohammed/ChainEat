@@ -66,6 +66,7 @@ function App() {
               <Link to="/reservations" className="nav-link">
                 My Reservations
               </Link>
+
               <button onClick={logout} className="logout-button">
                 Logout
               </button>
@@ -90,6 +91,7 @@ function App() {
         <Route path="/restaurants" element={<Restaurants />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
+
         <Route
           path="/reservations"
           element={user ? <Reservations /> : <Navigate to="/login" />}
