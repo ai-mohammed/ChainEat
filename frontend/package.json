@@ -25,6 +25,7 @@
     "vite": "^6.2.0"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "axios": "^1.8.4",
     "frontend": "file:",
     "react-router-dom": "^6.30.0"
