@@ -1,30 +1,33 @@
-import "../App.css"; // or create AboutUs.css if you want it separate
-import userImage from "../assets/user.png";
+import "../App.css";
+import leo from "../assets/leo.jpeg";
+import luna from "../assets/luna3.jpeg";
+import mohammed from "../assets/mohammed.jpg";
+import olzhas from "../assets/olzhas.jpeg";
 
 const teamMembers = [
-  { name: "Mohammed Addi", role: "role1", image: userImage },
-  { name: "Léo Gaudin", role: "role2", image: userImage },
-  { name: "Luna Grandjean", role: "role3", image: userImage },
-  { name: "Olzhas Samat", role: "role4", image: userImage },
+  { name: "Léo Gaudin", role: "✉: leo.gaudin@student.griffith.ie", image: leo },
+  { name: "Luna Grandjean", role: "✉: luna.grandjean@student.griffith.ie", image: luna },
+  { name: "Mohammed Addi", role: "✉: mohammed.addi@student.griffith.ie", image: mohammed },
+  { name: "Olzhas Samat", role: "✉: olzhas.samat@student.griffith.ie", image: olzhas },
 ];
 
 const AboutUs = () => {
   return (
-    <div className="about-container">
-      <h1 className="about-title">
-        Meet the <span className="highlight">ChainEats</span> Team
-      </h1>
-      <p className="about-description">
-        We are a team of passionate developers who built ChainEats to make
-        restaurant booking easier.
-      </p>
-
-      <div className="team-grid">
-        {teamMembers.map((member, index) => (
-          <div key={index} className="team-member">
-            <img src={member.image} alt={member.name} className="team-photo" />
-            <h3 className="team-name">{member.name}</h3>
-            <p className="team-role">{member.role}</p>
+    <div className="team-container">
+      <h2 className="section-title">Meet Our Team</h2>
+      <div className="team-grid-flip">
+        {teamMembers.map((member, idx) => (
+          <div key={idx} className="team-card-flip">
+            <div className="card-inner">
+              <div className="card-front">
+                <img src={member.image} alt={member.name} />
+                <h3>{member.name}</h3>
+              </div>
+              <div className="card-back">
+                <h3>{member.name}</h3>
+                <p>{member.role}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
