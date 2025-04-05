@@ -330,77 +330,213 @@ body {
 }
 
 /* 🌐 Contact Page Styling */
-.contact-wrapper {
-  background-color: #f4f4f9;
-  padding: 100px 20px 60px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-}
-
-.contact-box {
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
+/* Global Contact Section */
+.contact {
+  padding: 100px 0;
+  background: #fff; /* White background */
   width: 100%;
+  color: #333; /* Dark text for contrast */
 }
 
-.contact-heading {
-  font-size: 28px;
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Heading */
+.heading {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.heading h2 {
+  font-size: 36px;
+  font-weight: 700;
   margin-bottom: 10px;
-  color: #333;
 }
 
-.contact-subtext {
-  font-size: 15px;
+.heading h2 span {
+  color: #ff6600; /* Accent color remains */
+}
+
+.heading p {
+  font-size: 16px;
   color: #666;
-  margin-bottom: 25px;
   line-height: 1.6;
 }
 
-.contact-form .form-group {
+/* Grid Layout for 3 Columns */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Card Base Style for Grid Items */
+.grid-col {
+  width: 18rem; /* Approximately 288px */
+  background: #f7f7f7; /* Light gray card background */
+  border-radius: 0.75rem; /* 12px rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+.grid-col:hover {
+  transform: translateY(-0.5rem);
+}
+
+/* Card Inner Content */
+.card-content {
+  text-align: center;
+}
+
+/* LEFT COLUMN: Contact Details */
+.left-col .card-content {
+  text-align: center;
+}
+
+.left-col .card-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.left-col .card-content p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.75rem;
+}
+
+/* Info items for left column */
+.info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  font-size: 1rem;
+  color: #555;
+  margin-top: 10%;
+}
+/* Style for the PNG icons */
+.info-icon {
+  width: 8%; /* Adjust width as needed */
+  height: 30px; /* Set a fixed height if desired */
+  object-fit: contain; /* Ensures the image maintains its aspect ratio */
+  margin-right: 10px; /* Spacing between the image and text */
+}
+
+.info i {
+  margin-top: 3px; /* Adjust icon vertical alignment */
+}
+
+/* CENTER COLUMN: Additional Content */
+.center-col .card-content {
+  text-align: center;
+}
+
+.center-col .map-placeholder img {
+  width: 100%;
+  border-radius: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.center-col .card-content h3,
+.center-col .card-content p {
+  margin-bottom: 0.75rem;
+}
+
+.map-photos {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 10%;
+  margin-bottom: 10px;
+}
+
+.map-photo {
+  width: 90%; /* Adjust size as needed */
+  height: auto;
+  border-radius: 4px; /* Optional: rounds the corners */
+  cursor: pointer;
+  transition: transform 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px; /* Space between images */
+}
+
+.map-photo:hover {
+  transform: scale(1.05);
+}
+
+/* RIGHT COLUMN: Contact Form */
+
+.right-col .contact-box {
+  background: #f7f7f7;
+  border-radius: 10px;
+  padding: 20px;
+  color: #333;
+}
+
+.right-col .contact-heading {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.right-col .contact-subtext {
+  font-size: 14px;
+  text-align: center;
   margin-bottom: 20px;
+  color: #555;
+}
+
+.right-col .contact-form .form-group {
+  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
 }
 
-.contact-form label {
-  margin-bottom: 6px;
-  font-weight: 500;
+.right-col .contact-form label {
+  font-size: 14px;
+  margin-bottom: 5px;
   color: #333;
 }
 
-.contact-form input,
-.contact-form textarea {
-  padding: 10px 14px;
-  font-size: 15px;
+.right-col .contact-form input,
+.right-col .contact-form textarea {
+  padding: 10px;
+  font-size: 14px;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  transition: border 0.3s ease;
+  border-radius: 6px;
 }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
-  border-color: #ff9900;
-  outline: none;
-}
-
-.contact-button {
-  background-color: #ff9900;
-  color: white;
-  padding: 12px 20px;
-  font-size: 16px;
+.right-col .contact-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: #ff6600;
+  color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s;
 }
 
-.contact-button:hover {
-  background-color: #e68100;
+.right-col .contact-button:hover {
+  background: #e65c00;
+}
+
+/* Responsive Layout: Single Column on Small Screens */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* 🏠 Home Page Specific */
@@ -482,7 +618,8 @@ body {
   transform: rotateY(180deg);
 }
 
-.card-front, .card-back {
+.card-front,
+.card-back {
   position: absolute;
   width: 100%;
   height: 100%;
