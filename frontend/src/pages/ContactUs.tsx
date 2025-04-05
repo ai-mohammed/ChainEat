@@ -73,7 +73,7 @@ const Contact = () => {
           {/* Center Column: Map */}
           <div className="grid-col center-col">
             <div className="card-content">
-              <h3>Our Location</h3>
+              <h3>Our Locations</h3>
               <div className="map-photos">
                 <a
                   href="https://maps.app.goo.gl/1PmybRE2gF6MWZbC7"

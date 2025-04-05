@@ -46,41 +46,43 @@ function App() {
   return (
     <>
       <nav className="navbar">
-        <div className="nav-left">
-          <Link to="/" className="nav-link">
-            Home
-          </Link>
-          <Link to="/restaurants" className="nav-link">
-            Restaurants
-          </Link>
-          <Link to="/about" className="nav-link">
-            About Us
-          </Link>
-          <Link to="/contact" className="nav-link">
-            Contact
-          </Link>
-        </div>
-        <div className="nav-right">
-          {user ? (
-            <>
-              <Link to="/reservations" className="nav-link">
-                My Reservations
-              </Link>
+        <div className="navbar-container">
+          <div className="nav-left">
+            <Link to="/" className="nav-link">
+              Home
+            </Link>
+            <Link to="/restaurants" className="nav-link">
+              Restaurants
+            </Link>
+            <Link to="/about" className="nav-link">
+              About Us
+            </Link>
+            <Link to="/contact" className="nav-link">
+              Contact
+            </Link>
+          </div>
+          <div className="nav-right">
+            {user ? (
+              <>
+                <Link to="/reservations" className="nav-link">
+                  My Reservations
+                </Link>
 
-              <button onClick={logout} className="logout-button">
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="nav-link">
-                Login
-              </Link>
-              <Link to="/register" className="nav-link register-button">
-                Register
-              </Link>
-            </>
-          )}
+                <button onClick={logout} className="logout-button">
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="nav-link">
+                  Login
+                </Link>
+                <Link to="/register" className="nav-link register-button">
+                  Register
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </nav>
 
