@@ -1,6 +1,6 @@
 import "../App.css";
 import leo from "../assets/leo.jpeg";
-import luna from "../assets/luna3.jpeg";
+import luna from "../assets/Luna_.jpg";
 import mohammed from "../assets/mohammed.jpg";
 import olzhas from "../assets/olzhas.jpeg";
 
