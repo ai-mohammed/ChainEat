@@ -122,21 +122,32 @@ const Reservations = ({ user }) => {
   const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API_BASE}/reservations/my`, { withCredentials: true })
+    axios
+      .get(`${API_BASE}/reservations/my`, { withCredentials: true })
       .then(response => setReservations(response.data))
       .catch(err => console.error(err));
   }, []);
 
   return (
-    <div className="restaurants-container">
+    <div className="reservations-container">
       <h2>My Reservations</h2>
-      <ul>
-        {reservations.map(r => (
-          <li key={r._id}>{r.restaurant.name} - {new Date(r.reservationDate).toLocaleDateString()}</li>
-        ))}
-      </ul>
+      <div className="reservation-list">
+        {reservations.length === 0 ? (
+          <p>No reservations yet.</p>
+        ) : (
+          reservations.map(r => (
+            <div key={r._id} className="reservation-card">
+              <h3>{r.restaurant.name}</h3>
+              <p>{new Date(r.reservationDate).toLocaleString()}</p>
+              <p>{r.restaurant.cuisine}</p>
+              <p>Guests: {r.guests || 1}</p>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };
+
 
 export default App;

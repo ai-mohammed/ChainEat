@@ -111,83 +111,130 @@ const Reservations = () => {
   };
 
   return (
-    <div className="reservations-container">
-      <h2>{user?.role === "admin" ? "All Reservations" : "My Reservations"}</h2>
-      <ul>
-        {reservations.map((r) => (
-          <li key={r._id}>
-            {r.restaurant.name} - {new Date(r.reservationDate).toLocaleString()}{" "}
-            ({r.status}){user?.role === "admin" && <> by {r.user.email}</>}
-            {r.status === "pending" && user?.role === "admin" && (
-              <>
-                <button onClick={() => confirmReservation(r._id)}>
-                  Confirm
-                </button>
-                <button onClick={() => cancelReservation(r._id)}>Cancel</button>
-              </>
-            )}
-            {r.status === "pending" && user?.role !== "admin" && (
-              <button onClick={() => cancelReservation(r._id)}>Cancel</button>
-            )}
-          </li>
-        ))}
-      </ul>
+    <div className="reservation-form">
+
+      <div className="reservation-wrapper">
+        <h2 className="reservation-title">
+          {user?.role === "admin" ? "All Reservations" : "My Reservations"}
+        </h2>
+        <div className="reservation-card-list">
+          {reservations.map((r) => (
+            <div className="reservation-card" key={r._id}>
+              <div>
+                <h3 className="restaurant-name">{r.restaurant.name}</h3>
+                <p className="reservation-date">
+                  {new Date(r.reservationDate).toLocaleString()}
+                </p>
+                <p className="reservation-status">Status: {r.status}</p>
+                {user?.role === "admin" && (
+                  <p className="reservation-user">User: {r.user.email}</p>
+                )}
+              </div>
+
+              <div className="reservation-buttons">
+                {r.status === "pending" && user?.role === "admin" && (
+                  <>
+                    <button
+                      className="btn confirm"
+                      onClick={() => confirmReservation(r._id)}
+                    >
+                      Confirm
+                    </button>
+                    <button
+                      className="btn cancel"
+                      onClick={() => cancelReservation(r._id)}
+                    >
+                      Cancel
+                    </button>
+                  </>
+                )}
+                {r.status === "pending" && user?.role !== "admin" && (
+                  <button
+                    className="btn cancel"
+                    onClick={() => cancelReservation(r._id)}
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+
 
       {user?.role !== "admin" && (
-        <>
-          <h3>Create Reservation</h3>
+        <div className="reservation-form">
+          <h3 className="form-title">Create Reservation</h3>
 
-          <select
-            value={restaurantName}
-            onChange={(e) => setRestaurantName(e.target.value)}
-            required
-          >
-            <option value="" disabled>
-              Select a Restaurant
-            </option>
-            {restaurants.map((res) => (
-              <option key={res._id} value={res.name}>
-                {res.name}
+          <label>
+            Restaurant
+            <select
+              value={restaurantName}
+              onChange={(e) => setRestaurantName(e.target.value)}
+              required
+            >
+              <option value="" disabled>
+                Select a Restaurant
               </option>
-            ))}
-          </select>
+              {restaurants.map((res) => (
+                <option key={res._id} value={res.name}>
+                  {res.name}
+                </option>
+              ))}
+            </select>
+          </label>
 
-          <input
-            type="date"
-            value={date}
-            min={today}
-            onChange={(e) => {
-              setDate(e.target.value);
-              setTime("");
-            }}
-            required
-          />
+          <label>
+            Date
+            <input
+              type="date"
+              value={date}
+              min={today}
+              onChange={(e) => {
+                setDate(e.target.value);
+                setTime("");
+              }}
+              required
+            />
+          </label>
 
-          <select
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            required
-            disabled={!date}
-          >
-            <option value="" disabled>
-              Select Time
-            </option>
-            {generateAvailableTimes(date)}
-          </select>
+          <label>
+            Time
+            <select
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              required
+              disabled={!date}
+            >
+              <option value="" disabled>
+                Select Time
+              </option>
+              {generateAvailableTimes(date)}
+            </select>
+          </label>
 
-          <input
-            type="number"
-            min={1}
-            value={guests}
-            onChange={(e) => setGuests(Number(e.target.value))}
-            required
-          />
-          <button onClick={makeReservation}>Reserve</button>
-        </>
+          <label>
+            Guests
+            <input
+              type="number"
+              min={1}
+              value={guests}
+              onChange={(e) => setGuests(Number(e.target.value))}
+              required
+            />
+          </label>
+
+          <button className="btn reserve" onClick={makeReservation}>
+            Reserve
+          </button>
+        </div>
       )}
     </div>
   );
 };
+
 
 // Dynamic available time slots function clearly defined:
 const generateAvailableTimes = (date: string) => {
