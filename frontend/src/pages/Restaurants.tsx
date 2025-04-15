@@ -318,7 +318,7 @@ function Restaurants() {
     <div style={{ width: "100%", padding: "80px 20px" }}>
       {/* -- PAGE TITLE -- */}
       <h1 style={{ textAlign: "center", marginBottom: "40px", color: "#333" }}>
-        Advanced Restaurants List
+        Restaurants List
       </h1>
 
       {/* -- SEARCH & SORT CONTROLS -- */}
