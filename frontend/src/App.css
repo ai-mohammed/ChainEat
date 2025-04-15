@@ -107,11 +107,10 @@ body {
   gap: 15px;
   padding: 40px;
   background-color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   margin: 120px auto;
   max-width: 400px;
-  width: 90%;
+  width: 100%;
 }
 
 .auth-form input {
@@ -174,7 +173,6 @@ body {
   color: #fbf7f7;
   font-weight: bold;
 }
-
 
 /* 🌄 Hero Section */
 .hero-section {
@@ -278,7 +276,7 @@ body {
   justify-content: center;
   padding: 80px 20px;
   background-color: #f4f4f9;
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 
 /* Intro box stays the same */
@@ -347,7 +345,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(255, 102, 0, 0.15);
   border-left: 6px solid #ff6600;
-  width: 240px; 
+  width: 240px;
   padding: 20px;
   text-align: center;
   display: flex;
@@ -357,8 +355,6 @@ body {
   min-height: 420px;
   flex-shrink: 0; /* 👈 prevent squishing */
 }
-
-
 
 /* 📸 Image */
 .team-photo {
@@ -423,7 +419,6 @@ body {
     max-width: 300px;
   }
 }
-
 
 /* 🌐 Contact Page Styling */
 /* Global Contact Section */
@@ -520,8 +515,8 @@ body {
 }
 /* Style for the PNG icons */
 .info-icon {
-  width: 8%; 
-  height: 30px; 
+  width: 8%;
+  height: 30px;
   object-fit: contain; /* Ensures the image maintains its aspect ratio */
   margin-right: 10px; /* Spacing between the image and text */
 }
@@ -533,7 +528,6 @@ body {
 /* CENTER COLUMN: Additional Content */
 .center-col .card-content {
   text-align: center;
-  
 }
 
 .center-col .map-placeholder img {
