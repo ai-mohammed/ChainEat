@@ -315,7 +315,7 @@ function Restaurants() {
   /** ------------- RENDER ------------- **/
 
   return (
-    <div style={{ width: "100%", padding: "80px 20px" }}>
+    <div style={{ width: "90%", justifyContent: "center", margin: "5% auto" }}>
       {/* -- PAGE TITLE -- */}
       <h1 style={{ textAlign: "center", marginBottom: "40px", color: "#333" }}>
         Restaurants List
