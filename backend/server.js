@@ -18,10 +18,7 @@ const cors = require("cors"); // <-- Add this line
 // Enable CORS (must be before routes)
 app.use(
   cors({
-    origin: [
-      "https://chain-eat.vercel.app",
-      "http://localhost:3000", // ou le port où tourne votre front en dev
-    ], // Allow frontend requests
+    origin: "https://chain-eat.vercel.app", // Allow frontend requests
     credentials: true, // Allow cookies/sessions
   })
 );
