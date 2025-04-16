@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import React, { ReactElement } from "react";
 
 type Reservation = {
   _id: string;
@@ -214,25 +214,29 @@ const Reservations = () => {
 };
 
 // Your existing generateAvailableTimes helper
-const generateAvailableTimes = (date: string) => {
-  const times: JSX.Element[] = [];
+const generateAvailableTimes = (date: string): ReactElement[] => {
+  const times: ReactElement[] = [];
   if (!date) return times;
 
+  const selectedDate = new Date(date);
   const now = new Date();
+
   for (let hour = 11; hour <= 23; hour++) {
     ["00", "30"].forEach((minute) => {
-      const t = `${hour.toString().padStart(2, "0")}:${minute}`;
-      const dt = new Date(`${date}T${t}`);
-      if (dt > now || date !== now.toISOString().split("T")[0]) {
-        times.push(<option key={t}>{t}</option>);
-      }
+      const timeStr = `${hour.toString().padStart(2, "0")}:${minute}`;
+      const slotDateTime = new Date(`${date}T${timeStr}`);
+      if (
+        selectedDate.toDateString() !== now.toDateString() ||
+        slotDateTime > now
+      )
+        times.push((<option key={timeStr}>{timeStr}</option>) as ReactElement);
     });
   }
 
-  // include midnight if still valid
-  const mid = new Date(`${date}T00:00`);
-  mid.setDate(mid.getDate() + 1);
-  if (mid > now) times.push(<option key="00:00">00:00</option>);
+  const midnight = new Date(`${date}T00:00`);
+  midnight.setDate(midnight.getDate() + 1);
+  if (selectedDate.toDateString() !== now.toDateString() || midnight > now)
+    times.push((<option key="00:00">00:00</option>) as ReactElement);
 
   return times;
 };
