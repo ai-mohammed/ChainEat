@@ -1,6 +1,5 @@
 import axios from "axios";
-import React, { ReactElement } from "react";
-
+import React, { useState, useEffect, ReactElement } from "react";
 type Reservation = {
   _id: string;
   reservationDate: string;
