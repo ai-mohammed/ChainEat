@@ -11,7 +11,7 @@ import Reservations from "./components/Reservations";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/ContactUs";
 import Footer from "./components/Footer";
-
+axios.defaults.withCredentials = true;
 type User = {
   email: string;
   role: string; // 👈 Add role here
