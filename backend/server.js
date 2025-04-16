@@ -41,6 +41,7 @@ app.use(
       mongoUrl: process.env.MONGO_URI,
     }),
     cookie: {
+      secure: true, // Use true if using HTTPS, false for HTTP (or set based on environment)
       // Session expires in 1 hour (in milliseconds)
       sameSite: "none",
       maxAge: 1000 * 60 * 60,
