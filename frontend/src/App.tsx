@@ -17,7 +17,7 @@ type User = {
   role: string; // 👈 Add role here
 };
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://chaineat-9acv.onrender.com";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);

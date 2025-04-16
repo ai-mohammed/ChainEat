@@ -19,7 +19,7 @@ const Register = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/auth/register", {
+      await axios.post("https://chaineat-9acv.onrender.com/auth/register", {
         email,
         password,
       });

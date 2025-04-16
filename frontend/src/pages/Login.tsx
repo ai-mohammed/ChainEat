@@ -17,7 +17,7 @@ const Login = ({ setUser }: Props) => {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:5000/auth/login",
+        "https://chaineat-9acv.onrender.com/auth/login",
         { email, password },
         { withCredentials: true }
       );

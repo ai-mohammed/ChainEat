@@ -93,13 +93,15 @@ function Restaurants() {
   useEffect(() => {
     // 1) Fetch the restaurants
     axios
-      .get("http://localhost:5000/restaurants")
+      .get("https://chaineat-9acv.onrender.com/restaurants")
       .then((res) => setRestaurants(res.data as Restaurant[]))
       .catch((err) => console.error("Failed to load restaurants:", err));
 
     // 2) Fetch the logged-in user
     axios
-      .get<User>("http://localhost:5000/auth/me", { withCredentials: true })
+      .get<User>("https://chaineat-9acv.onrender.com/auth/me", {
+        withCredentials: true,
+      })
       .then((res) => setUser(res.data))
       .catch(() => setUser(null));
   }, []);
@@ -127,7 +129,7 @@ function Restaurants() {
     if (!editingRestaurant) return;
     try {
       await axios.put(
-        `http://localhost:5000/restaurants/${editingRestaurant._id}`,
+        `https://chaineat-9acv.onrender.com/restaurants/${editingRestaurant._id}`,
         editData,
         { withCredentials: true }
       );
@@ -154,9 +156,12 @@ function Restaurants() {
       return;
     }
     try {
-      await axios.delete(`http://localhost:5000/restaurants/${restaurantId}`, {
-        withCredentials: true,
-      });
+      await axios.delete(
+        `https://chaineat-9acv.onrender.com/restaurants/${restaurantId}`,
+        {
+          withCredentials: true,
+        }
+      );
       setRestaurants((prev) => prev.filter((r) => r._id !== restaurantId));
       alert("Deleted successfully!");
     } catch (err) {
@@ -213,7 +218,7 @@ function Restaurants() {
       // Example route: POST /restaurants/:id/rate
       try {
         await axios.post(
-          `http://localhost:5000/restaurants/${restaurant._id}/rate`,
+          `https://chaineat-9acv.onrender.com/restaurants/${restaurant._id}/rate`,
           { userRating: value },
           { withCredentials: true }
         );
