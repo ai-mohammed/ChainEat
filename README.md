@@ -6,8 +6,8 @@ ChainEats is a web-based application designed to streamline the dining experienc
 
 ## Technologies Used
 
-- **Frontend:** [ChainEats Frontend](https://chain-eat.vercel.app/) (React.js)
-- **Backend:** [ChainEats Backend](https://chaineat-9acv.onrender.com) (Node.js & Express.js)
+- **Frontend:** [ChainEats Frontend](https://github.com/ai-mohammed/ChainEat/tree/main/frontend) (React.js)
+- **Backend:** [ChainEats Backend](https://github.com/ai-mohammed/ChainEat/tree/main/backend ) (Node.js & Express.js)
 - **Database:** MongoDB
 
 ## Features
