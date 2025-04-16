@@ -17,7 +17,7 @@ const AddAdmin = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5000/auth/register-admin",
+        "https://chaineat-9acv.onrender.com/auth/register-admin",
         { email, password, role: "admin" },
         { withCredentials: true }
       );

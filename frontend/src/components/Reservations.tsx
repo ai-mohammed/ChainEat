@@ -40,22 +40,24 @@ const Reservations = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/auth/me", { withCredentials: true })
+      .get("https://chaineat-9acv.onrender.com/auth/me", {
+        withCredentials: true,
+      })
       .then((res) => setUser(res.data as User))
       .catch(() => setUser(null));
 
     axios
       .get(
         user?.role === "admin"
-          ? "http://localhost:5000/reservations"
-          : "http://localhost:5000/reservations/my",
+          ? "https://chaineat-9acv.onrender.com/reservations"
+          : "https://chaineat-9acv.onrender.com/reservations/my",
         { withCredentials: true }
       )
       .then((res) => setReservations(res.data as Reservation[]))
       .catch((err) => console.error(err));
 
     axios
-      .get("http://localhost:5000/restaurants")
+      .get("https://chaineat-9acv.onrender.com/restaurants")
       .then((res) => setRestaurants(res.data as Restaurant[]))
       .catch((err) => console.error(err));
   }, [user]);
@@ -63,7 +65,7 @@ const Reservations = () => {
   const makeReservation = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/reservations",
+        "https://chaineat-9acv.onrender.com/reservations",
         { restaurantName, date, time, guests },
         { withCredentials: true }
       );
@@ -79,8 +81,8 @@ const Reservations = () => {
     try {
       const endpoint =
         user?.role === "admin"
-          ? `http://localhost:5000/reservations/${id}`
-          : `http://localhost:5000/reservations/my/${id}/cancel`;
+          ? `https://chaineat-9acv.onrender.com/reservations/${id}`
+          : `https://chaineat-9acv.onrender.com/reservations/my/${id}/cancel`;
 
       await axios.put(
         endpoint,
@@ -98,7 +100,7 @@ const Reservations = () => {
   const confirmReservation = async (id: string) => {
     try {
       await axios.put(
-        `http://localhost:5000/reservations/${id}`,
+        `https://chaineat-9acv.onrender.com/reservations/${id}`,
         { status: "confirmed" },
         { withCredentials: true }
       );
@@ -112,7 +114,6 @@ const Reservations = () => {
 
   return (
     <div className="reservation-form">
-
       <div className="reservation-wrapper">
         <h2 className="reservation-title">
           {user?.role === "admin" ? "All Reservations" : "My Reservations"}
@@ -161,8 +162,6 @@ const Reservations = () => {
           ))}
         </div>
       </div>
-
-
 
       {user?.role !== "admin" && (
         <div className="reservation-form">
@@ -234,7 +233,6 @@ const Reservations = () => {
     </div>
   );
 };
-
 
 // Dynamic available time slots function clearly defined:
 const generateAvailableTimes = (date: string) => {

@@ -17,7 +17,7 @@ const AddRestaurant = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5000/restaurants", // ✅ fixed endpoint
+        "https://chaineat-9acv.onrender.com/restaurants", // ✅ fixed endpoint
         {
           name,
           address,
