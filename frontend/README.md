@@ -48,6 +48,7 @@ The ChainEat Frontend provides a modern, responsive interface that allows users 
 
 ## Project Structure
 
+```
 ├── src/
 | ├── assets / # Contains static files such as images, icons, etc.
 │ ├── components/ # Reusable UI components and widgets
@@ -69,6 +70,7 @@ The ChainEat Frontend provides a modern, responsive interface that allows users 
 │ └── main.tsx # Entry point that renders the App component into the DOM
 ├── package.json # Configuration for project dependencies and scripts
 └── README.md # Project documentation
+```
 
 ## Installation & Setup
 
