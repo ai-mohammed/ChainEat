@@ -1,22 +1,38 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
+type AxiosCustomError = {
+  response?: {
+    data?: {
+      error?: string;
+    };
+  };
+};
 const AddRestaurant = () => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [cuisine, setCuisine] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("https://chaineat-9acv.onrender.com/restaurants/add", {
-        name,
-        address,
-        cuisine,
-      });
+      await axios.post(
+        "http://localhost:5000/restaurants", // ✅ fixed endpoint
+        {
+          name,
+          address,
+          cuisine,
+        },
+        { withCredentials: true }
+      );
       alert("Restaurant added successfully!");
+      setName("");
+      setAddress("");
+      setCuisine("");
     } catch (err) {
-      alert("Failed to add restaurant");
+      const error = err as AxiosCustomError; // clearly typed
+      console.error(error);
+      alert(error.response?.data?.error || "Failed to add restaurant");
     }
   };
 

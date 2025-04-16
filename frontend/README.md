@@ -1,70 +1,157 @@
-# Getting Started with Create React App
+# ChainEat Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ChainEat Frontend is a React-based user interface for the ChainEat restaurant reservation platform. Built using **React**, **TypeScript**, **React Router**, and **Axios**, this project connects seamlessly to the ChainEat backend to provide an interactive experience including user authentication, restaurant listings, reservations, and more.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Project Structure](#project-structure)
+- [Installation & Setup](#installation--setup)
+- [Environment Configuration](#usage--navigation)
 
-### `npm start`
+## Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The ChainEat Frontend provides a modern, responsive interface that allows users to:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Browse restaurant listings and view detailed descriptions.
+- Register, log in, and manage their reservations.
+- Rate restaurants and get real-time feedback.
+- Use dedicated pages for About Us, Contact, and more to enhance user engagement.
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **User Authentication:**
+  - Login and registration pages enable secure user access.
+  - Session management is integrated with the backend via cookies.
+- **Restaurant Management:**
+  - Public listing of restaurants with detailed views and ratings.
+  - Administrators have tools to add or edit restaurant information.
+- **Reservation System:**
+  - Users can create, view, and cancel reservations.
+  - Admins have the ability to view and manage all reservations.
+- **Responsive Design:**
+  - Clean, modern styling using custom CSS with responsive breakpoints.
+  - A consistent navigation bar and footer for seamless site-wide experience.
+- **Contact & About Pages:**
+  - Dedicated pages with team introductions and a contact form integrated with EmailJS.
 
-### `npm run build`
+## Technologies Used
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **React & TypeScript:** Core framework with type safety.
+- **React Router:** Managing client-side routing.
+- **Axios:** Handling HTTP requests to the backend API.
+- **CSS:** Custom styling with App.css and index.css to provide a modern look.
+- **EmailJS:** (On the Contact page) to enable sending email directly from the frontend.
+- **React Icons:** For social media icons and enhanced UI elements.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Project Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+├── src/
+| ├── assets / # Contains static files such as images, icons, etc.
+│ ├── components/ # Reusable UI components and widgets
+│ │ ├── AddAdmin.tsx # Form for adding new admin users
+│ │ ├── AddRestaurant.tsx # Component for admin to add restaurant entries
+│ │ ├── Footer.tsx # Footer component displayed across pages
+│ │ ├── RateRestaurant.tsx # Component for users to rate restaurants
+│ │ └── Reservations.tsx # Displays and manages reservations
+│ ├── pages/ # Route-specific pages of the application
+│ │ ├── AboutUs.tsx # "About Us" page with team member profiles
+│ │ ├── ContactUs.tsx # "Contact" page with a form and contact details
+│ │ ├── Home.tsx # Landing page with hero section and call-to-action
+│ │ ├── Login.tsx # Login page for user authentication
+│ │ ├── Register.tsx # Registration page for new users
+│ │ └── Restaurants.tsx # Page displaying restaurant listings with search & admin controls
+│ ├── App.tsx # Main application component including routing and layout
+│ ├── App.css # Component-specific styling
+│ ├── index.css # Global stylesheet for base styles and resets
+│ └── main.tsx # Entry point that renders the App component into the DOM
+├── package.json # Configuration for project dependencies and scripts
+└── README.md # Project documentation
 
-### `npm run eject`
+## Installation & Setup
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Clone the Repository:**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+    git clone https://github.com/ai-mohammed/ChainEat.git
+    cd ChainEat-frontend
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. **Install Depencies:**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm install
+```
 
-## Learn More
+3. **Run the Project:**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Usage & Navigation
 
-### Code Splitting
+The ChainEat Frontend is designed with user experience in mind. Below is an overview of how to navigate and use the application effectively:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Navigation Bar
 
-### Analyzing the Bundle Size
+- **Home:**  
+  Returns you to the landing page featuring an engaging hero section with a call-to-action button to make a reservation.
+- **Restaurants:**  
+  Displays a comprehensive list of restaurants. Users can search for specific restaurants by name or cuisine, and sort results by name or rating.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **About Us:**  
+  Learn about our team! This page showcases team member profiles complete with photos, bios, and links to GitHub profiles.
 
-### Making a Progressive Web App
+- **Contact:**  
+  Provides contact details and includes a form powered by EmailJS, allowing you to send messages directly from the site.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- **My Reservations:**  
+  Available for logged-in users, this link takes you to your personal reservations dashboard where you can view, confirm, or cancel your reservations.
 
-### Advanced Configuration
+- **Authentication Options:**  
+  When not logged in, the navigation bar displays **Login** and **Register** options so you can easily access the secure parts of the application.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Authentication Pages
 
-### Deployment
+- **Login Page:**  
+  Users can log in using their email and password. On successful login, your session is maintained and the navigation bar updates to show options specific to authenticated users (e.g., My Reservations, Logout). Error messages are displayed if the login fails.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **Register Page:**  
+  New users can create an account by providing a valid email, password, and confirming the password. Upon successful registration, you'll be redirected to the login page to sign in.
 
-### `npm run build` fails to minify
+### Restaurants Page
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Restaurant Listings:**  
+  Browse through a searchable and sortable list of restaurants. Every restaurant card displays key details such as the name, cuisine, and address.
+- **Ratings & Reviews:**  
+  Interact with the star-based rating system to submit your rating for a restaurant. Your rating updates in real time and influences the average rating displayed.
+
+- **Admin Controls:**  
+  If logged in as an admin, you’ll have additional options:
+  - **Add Restaurant:** Use the form to add new restaurant entries.
+  - **Edit/Delete:** On each restaurant card, admins can edit details or remove a restaurant from the listing.
+
+### Reservations
+
+- **Create a Reservation:**  
+  Users can make a reservation by selecting a restaurant, choosing a date, time, and specifying the number of guests. The form validates your input and prevents duplicate bookings.
+
+- **Manage Reservations:**  
+  The reservations interface presents a clear list of your current bookings, including details like the restaurant name, reservation time, and status.
+  - **For Regular Users:**  
+    You can cancel your own reservations.
+  - **For Admins:**  
+    You can view all reservations and have additional controls to confirm or cancel any reservation.
+
+### Contact & About Us Pages
+
+- **About Us:**  
+  Gain insight into the team behind ChainEat. This page features detailed bios, professional photos, and direct links to team members' GitHub profiles, highlighting the people who built the application.
+
+- **Contact:**  
+  The contact page provides multiple avenues to reach out:
+  - **Contact Details:** Includes a phone number, email address, and physical location details.
+  - **Contact Form:** Use the form to send a direct message via EmailJS. Fill in your name, email, and message to get in touch.

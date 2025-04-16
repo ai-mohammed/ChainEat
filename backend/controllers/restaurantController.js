@@ -13,7 +13,6 @@ exports.createRestaurant = async (req, res) => {
       name,
       address,
       cuisine,
-      rating,
       description,
     });
     res.status(201).json(newRestaurant);
@@ -97,6 +96,54 @@ exports.deleteRestaurant = async (req, res) => {
     }
     res.status(200).json({ message: "Restaurant deleted successfully" });
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// RATE a restaurant by ID
+exports.rateRestaurant = async (req, res) => {
+  const { id } = req.params;
+  const { userRating } = req.body;
+  const userId = req.session.user.id;
+
+  try {
+    const restaurant = await Restaurant.findById(id);
+
+    if (!restaurant) {
+      return res.status(404).json({ error: "Restaurant not found" });
+    }
+
+    const existingRating = restaurant.userRatings.find(
+      (rating) => rating.userId.toString() === userId
+    );
+
+    if (existingRating) {
+      // If user has rated before, update their rating
+      const previousRating = existingRating.rating;
+      existingRating.rating = userRating;
+
+      // Update average rating (no change to ratingCount)
+      restaurant.rating =
+        (restaurant.rating * restaurant.ratingCount -
+          previousRating +
+          userRating) /
+        restaurant.ratingCount;
+    } else {
+      // New rating from this user
+      restaurant.userRatings.push({ userId, rating: userRating });
+
+      // Update rating and increment ratingCount
+      restaurant.rating =
+        (restaurant.rating * restaurant.ratingCount + userRating) /
+        (restaurant.ratingCount + 1);
+      restaurant.ratingCount += 1;
+    }
+
+    await restaurant.save();
+
+    res.status(200).json({ message: "Rating submitted successfully!" });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 };

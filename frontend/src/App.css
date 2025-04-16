@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* General body styling */
 body {
   font-family: Arial, sans-serif; /* Sets the font for the whole page */
@@ -13,10 +14,83 @@ body {
   display: flex; /* Uses flexbox for layout */
   justify-content: space-between; /* Spaces out navbar elements */
   align-items: center; /* Centers items vertically */
+=======
+/* 🌐 General body styling */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Root container */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Removed overflow: hidden to allow scrolling */
+}
+
+/* Optional main wrapper (if used) */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 100px; /* Prevent navbar overlap */
+}
+
+/* 🚀 Navbar styling */
+:root {
+  --navbar-bg: rgba(51, 51, 51, 0.9);
+  --navbar-bg-hover: rgba(51, 51, 51, 1);
+  --navbar-text: #fff;
+  --accent-color: #ff6600;
+  --transition-speed: 0.3s;
+}
+.navbar {
+  background-color: var(--navbar-bg);
+  padding: 10px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: background-color var(--transition-speed) ease,
+    padding var(--transition-speed) ease;
+}
+.navbar:hover,
+.navbar.scrolled {
+  background-color: var(--navbar-bg-hover);
+  padding: 13px 13px;
+}
+.navbar-container {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+>>>>>>> local
 }
 
 /* Styling for navigation links */
 .nav-link {
+<<<<<<< HEAD
   color: white; /* White text */
   text-decoration: none; /* Removes underline */
   margin: 0 15px; /* Adds spacing between links */
@@ -52,6 +126,607 @@ body {
 .home-container {
   text-align: center; /* Centers text */
   margin-top: 50px; /* Adds margin from top */
+=======
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 1.1rem;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: #ff6600;
+}
+
+.logout-button,
+.register-button {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  padding: 4% 2%;
+  margin-left: 0 5%;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.logout-button:hover,
+.register-button:hover {
+  background-color: #e65c00;
+}
+
+/* 📥 Auth Form (Login/Register) */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 40px;
+  background-color: white;
+  border-radius: 10px;
+  margin: 120px auto;
+  max-width: 400px;
+  width: 100%;
+}
+
+.auth-form input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.auth-form button {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.auth-form button:hover {
+  background-color: #e65c00;
+}
+
+.login-form-box {
+  background-color: rgba(32, 30, 30, 0.825);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-form-box input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.login-form-box button {
+  background-color: #ff6600;
+  color: white;
+  font-size: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-form-box button:hover {
+  background-color: #e65c00;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #fbf7f7;
+  font-weight: bold;
+}
+
+/* 🌄 Hero Section */
+.hero-section {
+  background-image: url("fond.png");
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  width: 100%;
+}
+
+.hero-content {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 10px;
+  max-width: 80%;
+}
+
+.cta-button {
+  background-color: #ff6600;
+  color: white;
+  padding: 12px 20px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.cta-button:hover {
+  background-color: #e65c00;
+}
+
+/* 👣 Footer */
+/* Footer base styling */
+.footer {
+  background-color: #222;
+  color: white;
+  padding: 40px 20px;
+  margin-top: auto;
+}
+
+/* Container to center footer content */
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Top section with columns */
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+/* Each column in the footer */
+.footer-column {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-column h2,
+.footer-column h3 {
+  margin-bottom: 15px;
+}
+
+/* Styling for the list of links */
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-column ul li a:hover {
+  color: #ff6600;
+}
+
+/* Social icons styling */
+.social-icons a {
+  color: white;
+  font-size: 24px;
+  margin-right: 15px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #ff6600;
+}
+
+/* Bottom section: copyright */
+.footer-bottom {
+  border-top: 1px solid #444;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* 👥 About Us Page - Redesigned Layout */
+/* Wrapper + Layout */
+.about-us-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  background-color: #f4f4f9;
+  overflow-x: hidden;
+}
+
+/* Intro box stays the same */
+.about-team-intro-box {
+  background-color: #fff;
+  border-left: 6px solid #ff6600;
+  border-right: 6px solid #ff6600;
+  border-radius: 12px;
+  padding: 35px 30px;
+  box-shadow: 0 10px 25px rgba(255, 102, 0, 0.15);
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.about-heading {
+  font-size: 28px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 15px;
+}
+
+.about-underline {
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: #ff6600;
+  border-radius: 4px;
+  margin: 10px auto 0;
+}
+
+.about-paragraph {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.about-paragraph strong {
+  color: #111;
+}
+
+.about-paragraph strong:nth-child(2),
+.about-paragraph strong:last-child {
+  color: #ff6600;
+}
+
+/* Team Grid Layout */
+.team-grid {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: nowrap; /* 👈 force single row */
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  overflow-x: auto; /* allow graceful scroll on narrow screens */
+  padding: 0 10px;
+  scrollbar-width: none; /* Firefox */
+}
+
+/* 🧑‍💻 Card Styling */
+.team-member {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(255, 102, 0, 0.15);
+  border-left: 6px solid #ff6600;
+  width: 240px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 420px;
+  flex-shrink: 0; /* 👈 prevent squishing */
+}
+
+/* 📸 Image */
+.team-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 15px;
+}
+
+/* 👤 Name & Info */
+.team-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ff6600;
+  margin-bottom: 6px;
+}
+
+.team-role {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.bio-text {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 8px; /* 👈 reduced spacing */
+  flex-grow: 1;
+}
+
+/* 🔗 GitHub Link Button */
+.github-link {
+  color: white;
+  background-color: #222;
+  padding: 6px 14px;
+  font-size: 14px;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-flex; /* enable icon+text alignment */
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  gap: 6px;
+  margin-top: 4px; /* tighter spacing */
+}
+
+.github-link:hover {
+  background-color: #444;
+}
+
+/* 📱 Responsive Tweak */
+@media (max-width: 900px) {
+  .team-grid {
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-x: hidden;
+  }
+
+  .team-member {
+    width: 90%;
+    max-width: 300px;
+  }
+}
+
+/* 🌐 Contact Page Styling */
+/* Global Contact Section */
+.contact {
+  padding: 100px 0;
+  background: #fff; /* White background */
+  width: 100%;
+  color: #333; /* Dark text for contrast */
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Heading */
+.heading {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.heading h2 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.heading h2 span {
+  color: #ff6600; /* Accent color remains */
+}
+
+.heading p {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Grid Layout for 3 Columns */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Card Base Style for Grid Items */
+.grid-col {
+  width: 18rem; /* Approximately 288px */
+  background: #f7f7f7; /* Light gray card background */
+  border-radius: 0.75rem; /* 12px rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+.grid-col:hover {
+  transform: translateY(-0.5rem);
+}
+
+/* Card Inner Content */
+.card-content {
+  text-align: center;
+}
+
+/* LEFT COLUMN: Contact Details */
+.left-col .card-content {
+  text-align: center;
+}
+
+.left-col .card-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.left-col .card-content p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.75rem;
+}
+
+/* Info items for left column */
+.info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  font-size: 1rem;
+  color: #555;
+  margin-top: 10%;
+}
+/* Style for the PNG icons */
+.info-icon {
+  width: 8%;
+  height: 30px;
+  object-fit: contain; /* Ensures the image maintains its aspect ratio */
+  margin-right: 10px; /* Spacing between the image and text */
+}
+
+.info i {
+  margin-top: 3px; /* Adjust icon vertical alignment */
+}
+
+/* CENTER COLUMN: Additional Content */
+.center-col .card-content {
+  text-align: center;
+}
+
+.center-col .map-placeholder img {
+  width: 100%;
+  border-radius: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.center-col .card-content h3,
+.center-col .card-content p {
+  margin-bottom: 0.75rem;
+}
+
+.map-photos {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 10%;
+  margin-bottom: 10px;
+}
+
+.map-photo {
+  width: 90%; /* Adjust size as needed */
+  height: auto;
+  border-radius: 4px; /* Optional: rounds the corners */
+  cursor: pointer;
+  transition: transform 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px; /* Space between images */
+}
+
+.map-photo:hover {
+  transform: scale(1.05);
+}
+
+/* RIGHT COLUMN: Contact Form */
+
+.right-col .contact-box {
+  background: #f7f7f7;
+  border-radius: 10px;
+  padding: 20px;
+  color: #333;
+}
+
+.right-col .contact-heading {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.right-col .contact-subtext {
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.right-col .contact-form .form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-col .contact-form label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.right-col .contact-form input,
+.right-col .contact-form textarea {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.right-col .contact-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.right-col .contact-button:hover {
+  background: #e65c00;
+}
+
+/* Responsive Layout: Single Column on Small Screens */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 🏠 Home Page Specific */
+.hero-section {
+  background-image: url("./assets/fond.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh; /* ← make it full screen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  width: 100%;
+  margin: 0; /* ensure no space */
+  padding: 0; /* ensure no space */
+}
+
+.hero-content {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 10px;
+  max-width: 80%;
+>>>>>>> local
 }
 
 /* Highlighted text style */
@@ -59,6 +734,7 @@ body {
   color: #ff6600; /* Orange color */
 }
 
+<<<<<<< HEAD
 /* Form container for login/register */
 .auth-form {
   width: 300px; /* Fixed width */
@@ -116,4 +792,434 @@ li {
   margin: 5px 0; /* Adds space between items */
   padding: 10px; /* Adds padding */
   border-radius: 5px; /* Rounds corners */
+=======
+.cta-button {
+  background-color: #ff6600;
+  color: white;
+  padding: 12px 20px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.cta-button:hover {
+  background-color: #e65c00;
+}
+
+/*reservation*/
+/*reservation*/
+.reservation-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 3rem 2rem;
+  background-color: white;
+  border-radius: 24px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+}
+
+.reservation-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.reservation-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.form-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.reservation-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  color: #333;
+  gap: 0.5rem;
+}
+
+.reservation-form input,
+.reservation-form select {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.2s ease;
+}
+
+.reservation-form input:focus,
+.reservation-form select:focus {
+  border-color: #007bff;
+}
+
+.btn.reserve {
+  align-self: flex-end;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 1rem;
+}
+
+.btn.reserve:hover {
+  background-color: #0056b3;
+}
+
+.reservation-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.reservation-card {
+  background-color: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  box-sizing: border-box;
+}
+
+.restaurant-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 0.5rem;
+}
+
+.reservation-date,
+.reservation-status,
+.reservation-user {
+  font-size: 1rem;
+  color: #666;
+  margin: 0.25rem 0;
+}
+
+.reservation-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.btn {
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn.confirm {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn.cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* Responsive tweak */
+@media (max-width: 768px) {
+  .reservation-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reservation-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+
+  .btn.reserve {
+    width: 100%;
+  }
+}
+
+/* Labels & Inputs */
+.reservation-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  color: #333;
+  gap: 0.5rem;
+}
+
+.reservation-form input,
+.reservation-form select {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border 0.2s ease;
+}
+
+.reservation-form input:focus,
+.reservation-form select:focus {
+  border-color: #007bff;
+}
+
+/* Submit Button */
+.btn.reserve {
+  align-self: center;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 1rem;
+}
+
+.btn.reserve:hover {
+  background-color: #0056b3;
+}
+
+/* Reservation Cards */
+.reservation-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.reservation-card {
+  background-color: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  box-sizing: border-box;
+}
+
+.restaurant-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 0.5rem;
+}
+
+.reservation-date,
+.reservation-status,
+.reservation-user {
+  font-size: 1rem;
+  color: #666;
+  margin: 0.25rem 0;
+}
+
+/* Button Group in Cards */
+.reservation-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.btn {
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn.confirm {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn.cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .reservation-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reservation-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+
+  .btn.reserve {
+    width: 100%;
+  }
+}
+
+/* From Uiverse.io by MuhammadHasann */
+.fancy-btn {
+  position: relative;
+  padding: 12px 35px;
+  background: #e65c00;
+  font-size: 17px;
+  font-weight: 500;
+  color: white;
+  border: 1px solid white;
+  border-radius: 8px;
+  box-shadow: 0 0 0 #e65c00;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.fancy-btn .star-1,
+.fancy-btn .star-2,
+.fancy-btn .star-3,
+.fancy-btn .star-4,
+.fancy-btn .star-5,
+.fancy-btn .star-6 {
+  position: absolute;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 0.3s ease-in-out;
+}
+
+.fancy-btn .star-1 {
+  top: 20%;
+  left: 20%;
+  width: 25px;
+}
+
+.fancy-btn .star-2 {
+  top: 45%;
+  left: 45%;
+  width: 15px;
+}
+
+.fancy-btn .star-3 {
+  top: 40%;
+  left: 40%;
+  width: 5px;
+}
+
+.fancy-btn .star-4 {
+  top: 20%;
+  left: 40%;
+  width: 8px;
+}
+
+.fancy-btn .star-5 {
+  top: 25%;
+  left: 45%;
+  width: 15px;
+}
+
+.fancy-btn .star-6 {
+  top: 5%;
+  left: 50%;
+  width: 5px;
+}
+
+.fancy-btn:hover {
+  background: transparent;
+  color: #fec195;
+  box-shadow: 0 0 25px #fec1958c;
+}
+
+.fancy-btn:hover .star-1 {
+  top: -80%;
+  left: -30%;
+  width: 25px;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fancy-btn:hover .star-2 {
+  top: -25%;
+  left: 10%;
+  width: 15px;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fancy-btn:hover .star-3 {
+  top: 55%;
+  left: 25%;
+  width: 5px;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fancy-btn:hover .star-4 {
+  top: 30%;
+  left: 80%;
+  width: 8px;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fancy-btn:hover .star-5 {
+  top: 25%;
+  left: 115%;
+  width: 15px;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fancy-btn:hover .star-6 {
+  top: 5%;
+  left: 60%;
+  width: 5px;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fil0 {
+  fill: #fffdef;
+>>>>>>> local
 }

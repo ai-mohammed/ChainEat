@@ -5,25 +5,15 @@ const restaurantController = require("../controllers/restaurantController");
 const { isAuthenticated, isAdmin } = require("../middlewares/authMiddleware");
 
 // Validation middleware for creating a restaurant
+// Validation middleware for creating a restaurant
 const validateRestaurant = [
-  // Ensure all required fields are provided and meet the specified criteria (e.g., name is not empty, address is not empty, etc.)
   check("name").notEmpty().withMessage("Name is required"),
   check("address").notEmpty().withMessage("Address is required"),
   check("cuisine").notEmpty().withMessage("Cuisine is required"),
-  // Ensure the rating is a number between 0 and 5
-  check("rating")
-    .optional()
-    .isNumeric()
-    .withMessage("Rating must be a number")
-    .isFloat({ min: 0, max: 5 })
-    .withMessage("Rating must be between 0 and 5"),
-  // Check for validation errors
+  // REMOVE rating validation
   (req, res, next) => {
-    // Extract the validation errors from the request
     const errors = validationResult(req);
-    // If errors exist, return them as a 400 (Bad Request) response to the client. This will trigger the error handling middleware in server.js.
     if (!errors.isEmpty()) {
-      // Return a 400 response with the array of errors if validation fails
       return res.status(400).json({ errors: errors.array() });
     }
     next();
@@ -59,6 +49,27 @@ router.delete(
   isAuthenticated,
   isAdmin,
   restaurantController.deleteRestaurant
+);
+
+// Route for users to rate a restaurant (no admin required)
+router.post(
+  "/:id/rate",
+  isAuthenticated, // Only authenticated users can rate
+  [
+    check("userRating")
+      .isNumeric()
+      .withMessage("Rating must be a number")
+      .isFloat({ min: 0, max: 5 })
+      .withMessage("Rating must be between 1 and 5"),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      next();
+    },
+  ],
+  restaurantController.rateRestaurant
 );
 
 // Export the router to be used in server.js

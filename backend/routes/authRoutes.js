@@ -4,8 +4,8 @@
 const express = require("express");
 const router = express.Router();
 // Import express-validator's check/body methods for validations
-const { body } = require("express-validator");
-
+const { body, check } = require("express-validator");
+const { isAuthenticated, isAdmin } = require("../middlewares/authMiddleware");
 // Import our auth controller
 const {
   registerUser,
@@ -46,6 +46,26 @@ router.get("/logout", logoutUser);
 
 // Route to get all users
 router.get("/users", getAllUsers);
+// Route to get the currently logged-in user
+router.get("/me", (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: "Not logged in" });
+  }
+  res.json(req.session.user);
+});
+
+router.post(
+  "/register-admin",
+  isAuthenticated,
+  isAdmin,
+  [
+    check("email").isEmail().withMessage("Valid email required"),
+    check("password")
+      .isLength({ min: 6 })
+      .withMessage("Password at least 6 chars"),
+  ],
+  registerUser
+);
 
 // Export the router to be used in server.js
 module.exports = router;

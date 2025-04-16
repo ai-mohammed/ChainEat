@@ -26,14 +26,34 @@ router.post("/", isAuthenticated, reservationController.createReservation);
 router.get("/my", reservationController.getUserReservations);
 
 // Manager/Admin Routes
-router.get("/", isAuthenticated, isAdmin,reservationController.getAllReservations);
+router.get(
+  "/",
+  isAuthenticated,
+  isAdmin,
+  reservationController.getAllReservations
+);
+// Cancel reservation
+router.put(
+  "/my/:id/cancel",
+  isAuthenticated,
+  reservationController.cancelReservation
+);
 
 //admins
 // Only admins can update reservations
-router.put("/:id", isAuthenticated, isAdmin, reservationController.updateReservation);
+router.put(
+  "/:id",
+  isAuthenticated,
+  isAdmin,
+  reservationController.updateReservation
+);
 
 // Only admins can delete reservations
-router.delete("/:id", isAuthenticated, isAdmin, reservationController.deleteReservation);
+router.delete(
+  "/:id",
+  isAuthenticated,
+  isAdmin,
+  reservationController.deleteReservation
+);
 
 module.exports = router;
-
