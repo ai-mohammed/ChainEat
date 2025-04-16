@@ -23,7 +23,7 @@ ChainEats is a web-based application designed to streamline the dining experienc
 
 1. Clone the repository.
    ```sh
-   git clone https://github.com/your-repo-link.git
+   git clone https://github.com/ai-mohammed/ChainEat.git
    cd chaineats
    ```
 2. Install dependencies for both frontend and backend.
@@ -34,8 +34,8 @@ ChainEats is a web-based application designed to streamline the dining experienc
 3. Set up environment variables in `.env` files for both frontend and backend.
 4. Start the development servers.
    ```sh
-   cd frontend && npm start
-   cd ../backend && npm run dev
+   cd backend && node server.js
+   cd ../frontend && npm run dev
    ```
 
 ## Deployment
