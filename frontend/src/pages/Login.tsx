@@ -6,7 +6,10 @@ import loginphoto from "../assets/login.jpg";
 type Props = {
   setUser: (user: { email: string; role: string }) => void; // Added role
 };
-
+interface LoginResponse {
+  email: string;
+  role: string;
+}
 const Login = ({ setUser }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,16 +19,17 @@ const Login = ({ setUser }: Props) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post(
+      const res = await axios.post<LoginResponse>(
         "https://chaineat-9acv.onrender.com/auth/login",
         { email, password },
         { withCredentials: true }
       );
 
-      setUser({ email: (res.data as any).email, role: (res.data as any).role }); //added role explicitly
+      setUser({ email: res.data.email, role: res.data.role }); //added role explicitly
       navigate("/reservations");
-    } catch (err: any) {
-      alert(err?.response?.data?.message || "Login failed");
+    } catch (err) {
+      const error = err as { response?: { data?: { message?: string } } };
+      alert(error?.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
