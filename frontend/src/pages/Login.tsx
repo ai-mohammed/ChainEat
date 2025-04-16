@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import loginphoto from "../assets/login.jpg";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 type Props = {
   setUser: (user: { email: string; role: string }) => void; // Added role
@@ -64,7 +65,7 @@ const Login = ({ setUser }: Props) => {
             {loading ? "Logging in..." : "Login"}
           </button>
           <p className="auth-text">
-            Don't have an account? <a href="/register">Register</a>
+            Don't have an account? <Link to="/register">Register</Link>
           </p>
         </form>
       </div>
