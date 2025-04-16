@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, Link, Navigate } from "react-router-dom";
+import axios from "axios";
 import "./App.css";
 
 import Home from "./pages/Home";
@@ -10,7 +11,6 @@ import Reservations from "./components/Reservations";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/ContactUs";
 import Footer from "./components/Footer";
-import axios from "axios";
 axios.defaults.withCredentials = true;
 type User = {
   email: string;
