@@ -9,7 +9,7 @@ ChainEat Frontend is a React-based user interface for the ChainEat restaurant re
 - [Technologies Used](#technologies-used)
 - [Project Structure](#project-structure)
 - [Installation & Setup](#installation--setup)
-- [Environment Configuration](#usage--navigation)
+- [Usage Navigation](#usage--navigation)
 
 ## Overview
 
