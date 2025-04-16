@@ -78,7 +78,7 @@ The ChainEat Frontend provides a modern, responsive interface that allows users 
 
 ```bash
     git clone https://github.com/ai-mohammed/ChainEat.git
-    cd ChainEat-frontend
+    cd frontend
 ```
 
 2. **Install Depencies:**
