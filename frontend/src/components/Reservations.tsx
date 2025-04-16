@@ -1,5 +1,6 @@
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useState, useEffect, useCallback, ReactElement } from "react";
+
 type Reservation = {
   _id: string;
   reservationDate: string;
@@ -18,6 +19,14 @@ type User = {
   role: string;
 };
 
+type AxiosCustomError = {
+  response?: {
+    data?: {
+      error?: string;
+    };
+  };
+};
+
 const Reservations = () => {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
@@ -29,42 +38,42 @@ const Reservations = () => {
 
   const today = new Date().toISOString().split("T")[0];
 
-  // 1) Load session user + restaurant list once
   useEffect(() => {
     axios
-      .get("/auth/me")
+      .get("https://chaineat-9acv.onrender.com/auth/me", {
+        withCredentials: true,
+      })
       .then((res) => setUser(res.data as User))
       .catch(() => setUser(null));
 
     axios
-      .get("/restaurants")
-      .then((res) => setRestaurants(res.data as Restaurant[]))
-      .catch(console.error);
-  }, []);
-
-  // 2) Fetch reservation list (admin vs customer)
-  const fetchReservations = useCallback(() => {
-    if (!user) return;
-    const url = user.role === "admin" ? "/reservations" : "/reservations/my";
-    axios
-      .get(url)
+      .get(
+        user?.role === "admin"
+          ? "https://chaineat-9acv.onrender.com/reservations"
+          : "https://chaineat-9acv.onrender.com/reservations/my",
+        { withCredentials: true }
+      )
       .then((res) => setReservations(res.data as Reservation[]))
-      .catch(console.error);
+      .catch((err) => console.error(err));
+
+    axios
+      .get("https://chaineat-9acv.onrender.com/restaurants")
+      .then((res) => setRestaurants(res.data as Restaurant[]))
+      .catch((err) => console.error(err));
   }, [user]);
 
-  // 3) Re‑fetch whenever `user` changes
-  useEffect(() => {
-    fetchReservations();
-  }, [fetchReservations]);
-
-  // 4) Actions now simply re‑fetch
   const makeReservation = async () => {
     try {
-      await axios.post("/reservations", { restaurantName, date, time, guests });
+      await axios.post(
+        "https://chaineat-9acv.onrender.com/reservations",
+        { restaurantName, date, time, guests },
+        { withCredentials: true }
+      );
       alert("Reservation successful!");
-      fetchReservations();
-    } catch (err: any) {
-      alert(err.response?.data?.error || "Reservation failed");
+      window.location.reload();
+    } catch (err: unknown) {
+      const error = err as AxiosCustomError;
+      alert(error.response?.data?.error || "Reservation failed");
     }
   };
 
@@ -72,23 +81,34 @@ const Reservations = () => {
     try {
       const endpoint =
         user?.role === "admin"
-          ? `/reservations/${id}`
-          : `/reservations/my/${id}/cancel`;
-      await axios.put(endpoint, { status: "cancelled" });
+          ? `https://chaineat-9acv.onrender.com/reservations/${id}`
+          : `https://chaineat-9acv.onrender.com/reservations/my/${id}/cancel`;
+
+      await axios.put(
+        endpoint,
+        { status: "cancelled" },
+        { withCredentials: true }
+      );
       alert("Reservation cancelled");
-      fetchReservations();
-    } catch (err: any) {
-      alert(err.response?.data?.error || "Cancellation failed");
+      window.location.reload();
+    } catch (err: unknown) {
+      const error = err as AxiosCustomError;
+      alert(error.response?.data?.error || "Cancellation failed");
     }
   };
 
   const confirmReservation = async (id: string) => {
     try {
-      await axios.put(`/reservations/${id}`, { status: "confirmed" });
+      await axios.put(
+        `https://chaineat-9acv.onrender.com/reservations/${id}`,
+        { status: "confirmed" },
+        { withCredentials: true }
+      );
       alert("Reservation confirmed");
-      fetchReservations();
-    } catch (err: any) {
-      alert(err.response?.data?.error || "Confirmation failed");
+      window.location.reload();
+    } catch (err: unknown) {
+      const error = err as AxiosCustomError;
+      alert(error.response?.data?.error || "Confirmation failed");
     }
   };
 
@@ -111,6 +131,7 @@ const Reservations = () => {
                   <p className="reservation-user">User: {r.user.email}</p>
                 )}
               </div>
+
               <div className="reservation-buttons">
                 {r.status === "pending" && user?.role === "admin" && (
                   <>
@@ -145,6 +166,7 @@ const Reservations = () => {
       {user?.role !== "admin" && (
         <div className="reservation-form">
           <h3 className="form-title">Create Reservation</h3>
+
           <label>
             Restaurant
             <select
@@ -155,9 +177,9 @@ const Reservations = () => {
               <option value="" disabled>
                 Select a Restaurant
               </option>
-              {restaurants.map((r) => (
-                <option key={r._id} value={r.name}>
-                  {r.name}
+              {restaurants.map((res) => (
+                <option key={res._id} value={res.name}>
+                  {res.name}
                 </option>
               ))}
             </select>
@@ -212,9 +234,9 @@ const Reservations = () => {
   );
 };
 
-// Your existing generateAvailableTimes helper
-const generateAvailableTimes = (date: string): ReactElement[] => {
-  const times: ReactElement[] = [];
+// Dynamic available time slots function clearly defined:
+const generateAvailableTimes = (date: string) => {
+  const times = [] as React.ReactElement[];
   if (!date) return times;
 
   const selectedDate = new Date(date);
@@ -228,14 +250,14 @@ const generateAvailableTimes = (date: string): ReactElement[] => {
         selectedDate.toDateString() !== now.toDateString() ||
         slotDateTime > now
       )
-        times.push((<option key={timeStr}>{timeStr}</option>) as ReactElement);
+        times.push(<option key={timeStr}>{timeStr}</option>);
     });
   }
 
   const midnight = new Date(`${date}T00:00`);
   midnight.setDate(midnight.getDate() + 1);
   if (selectedDate.toDateString() !== now.toDateString() || midnight > now)
-    times.push((<option key="00:00">00:00</option>) as ReactElement);
+    times.push(<option key="00:00">00:00</option>);
 
   return times;
 };
