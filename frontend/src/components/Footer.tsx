@@ -20,13 +20,15 @@ const Footer = () => {
                 <a href="/">Home</a>
               </li>
               <li>
-                <a href="/restaurants">Restaurants</a>
+                <a href="https://chain-eat.vercel.app/restaurants">
+                  Restaurants
+                </a>
               </li>
               <li>
-                <a href="/about">About Us</a>
+                <a href="https://chain-eat.vercel.app/about">About Us</a>
               </li>
               <li>
-                <a href="/contact">Contact</a>
+                <a href="https://chain-eat.vercel.app/contact">Contact</a>
               </li>
             </ul>
           </div>
