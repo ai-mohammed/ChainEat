@@ -5,7 +5,7 @@ require("dotenv").config();
 const express = require("express");
 // Create an express application
 const app = express();
-
+app.set("trust proxy", 1); // trust first proxy
 // Import the db connection (which runs mongoose.connect in db.js)
 const db = require("./db");
 
@@ -42,6 +42,7 @@ app.use(
     }),
     cookie: {
       // Session expires in 1 hour (in milliseconds)
+      sameSite: "none",
       maxAge: 1000 * 60 * 60,
     },
   })
