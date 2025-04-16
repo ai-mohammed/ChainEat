@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 type Reservation = {
   _id: string;
@@ -35,7 +36,7 @@ const Reservations = () => {
   const [time, setTime] = useState("");
   const [guests, setGuests] = useState(1);
   const [user, setUser] = useState<User | null>(null);
-
+  const navigate = useNavigate();
   const today = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
@@ -70,7 +71,7 @@ const Reservations = () => {
         { withCredentials: true }
       );
       alert("Reservation successful!");
-      window.location.reload();
+      navigate("/reservations");
     } catch (err: unknown) {
       const error = err as AxiosCustomError;
       alert(error.response?.data?.error || "Reservation failed");
@@ -90,7 +91,7 @@ const Reservations = () => {
         { withCredentials: true }
       );
       alert("Reservation cancelled");
-      window.location.reload();
+      navigate("/reservations");
     } catch (err: unknown) {
       const error = err as AxiosCustomError;
       alert(error.response?.data?.error || "Cancellation failed");
@@ -105,7 +106,7 @@ const Reservations = () => {
         { withCredentials: true }
       );
       alert("Reservation confirmed");
-      window.location.reload();
+      navigate("/reservations");
     } catch (err: unknown) {
       const error = err as AxiosCustomError;
       alert(error.response?.data?.error || "Confirmation failed");
