@@ -1,6 +1,6 @@
+import { FaFacebookF, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
+import "../App.css";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
-import { FaFacebookF, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa"; // Import icons
-import "./Footer.css"; // Import your CSS file for styling
 
 const Footer = () => {
   return (
