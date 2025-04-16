@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import AddRestaurant from "../components/AddRestaurant";
 
 /** ------------------ TYPES ------------------ **/
@@ -205,6 +206,7 @@ function Restaurants() {
   function StarRating({ restaurant }: { restaurant: Restaurant }) {
     const [localRating, setLocalRating] = useState<number>(0);
     const [hoveredStar, setHoveredStar] = useState<number>(0);
+    const navigate = useNavigate();
 
     const handleStarClick = async (value: number) => {
       setLocalRating(value);
@@ -217,7 +219,8 @@ function Restaurants() {
         );
       } catch (err) {
         console.error("Rating failed:", err);
-        alert("Rating submission failed");
+        alert("Rating submission failed, please login first.");
+        navigate("/login"); // Redirect to login if unauthorized
       }
     };
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import loginphoto from "../assets/login.jpg";
 
 type Props = {
@@ -10,7 +11,7 @@ const Login = ({ setUser }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -22,6 +23,7 @@ const Login = ({ setUser }: Props) => {
       );
 
       setUser({ email: (res.data as any).email, role: (res.data as any).role }); //added role explicitly
+      navigate("/reservations");
     } catch (err: any) {
       alert(err?.response?.data?.message || "Login failed");
     } finally {
@@ -41,7 +43,7 @@ const Login = ({ setUser }: Props) => {
           style={{ width: "100%", height: "auto", objectFit: "cover" }}
         />
       </div>
-      <div className="login-form" style={{ flex: 1, padding: "20px" }}>
+      <div className="login-form" style={{ flex: 1, padding: "5%" }}>
         <form className="auth-form" onSubmit={handleLogin}>
           <h2 style={{ textAlign: "center" }}>Login</h2>
           <input

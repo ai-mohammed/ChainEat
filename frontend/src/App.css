@@ -37,7 +37,7 @@ body {
 }
 .navbar {
   background-color: var(--navbar-bg);
-  padding: 10px 30px;
+  padding: 10px 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -53,15 +53,15 @@ body {
 .navbar:hover,
 .navbar.scrolled {
   background-color: var(--navbar-bg-hover);
-  padding: 15px 30px;
+  padding: 13px 13px;
 }
 .navbar-container {
-  width: 95%;
-  max-width: 1200px;
+  width: 90%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .nav-left,
@@ -74,7 +74,7 @@ body {
   color: white;
   text-decoration: none;
   margin: 0 15px;
-  font-size: 18px;
+  font-size: 1.1rem;
   transition: 0.3s;
   white-space: nowrap;
 }
@@ -88,7 +88,8 @@ body {
   background-color: #ff6600;
   color: white;
   border: none;
-  padding: 8px 12px;
+  padding: 4% 2%;
+  margin-left: 0 5%;
   cursor: pointer;
   font-size: 16px;
   border-radius: 5px;
@@ -211,60 +212,78 @@ body {
 }
 
 /* 👣 Footer */
+/* Footer base styling */
 .footer {
   background-color: #222;
   color: white;
-  text-align: center;
-  padding: 20px;
+  padding: 40px 20px;
   margin-top: auto;
 }
 
-.footer-content h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.footer-content p {
-  font-size: 16px;
-  color: #ccc;
-}
-
-.footer-links {
-  margin-top: 15px;
-}
-
-.footer-links a {
-  color: white;
-  text-decoration: none;
-  margin: 0 10px;
-  font-size: 16px;
-}
-
-.footer-links a:hover {
-  color: #ff6600;
-}
-
+/* Container to center footer content */
 .footer-container {
-  width: 90%;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.social-icons {
-  margin-top: 20px;
+/* Top section with columns */
+.footer-top {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-bottom: 20px;
 }
 
-.social-icons i {
-  font-size: 22px;
-  margin: 0 10px;
-  cursor: pointer;
+/* Each column in the footer */
+.footer-column {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-column h2,
+.footer-column h3 {
+  margin-bottom: 15px;
+}
+
+/* Styling for the list of links */
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a {
   color: white;
-  transition: 0.3s;
+  text-decoration: none;
 }
 
-.social-icons i:hover {
+.footer-column ul li a:hover {
   color: #ff6600;
+}
+
+/* Social icons styling */
+.social-icons a {
+  color: white;
+  font-size: 24px;
+  margin-right: 15px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #ff6600;
+}
+
+/* Bottom section: copyright */
+.footer-bottom {
+  border-top: 1px solid #444;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #ccc;
 }
 
 /* 👥 About Us Page - Redesigned Layout */
@@ -837,7 +856,6 @@ body {
   }
 }
 
-
 /* Labels & Inputs */
 .reservation-form label {
   display: flex;
@@ -964,4 +982,126 @@ body {
   .btn.reserve {
     width: 100%;
   }
+}
+
+/* From Uiverse.io by MuhammadHasann */
+.fancy-btn {
+  position: relative;
+  padding: 12px 35px;
+  background: #e65c00;
+  font-size: 17px;
+  font-weight: 500;
+  color: white;
+  border: 1px solid white;
+  border-radius: 8px;
+  box-shadow: 0 0 0 #e65c00;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.fancy-btn .star-1,
+.fancy-btn .star-2,
+.fancy-btn .star-3,
+.fancy-btn .star-4,
+.fancy-btn .star-5,
+.fancy-btn .star-6 {
+  position: absolute;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 0.3s ease-in-out;
+}
+
+.fancy-btn .star-1 {
+  top: 20%;
+  left: 20%;
+  width: 25px;
+}
+
+.fancy-btn .star-2 {
+  top: 45%;
+  left: 45%;
+  width: 15px;
+}
+
+.fancy-btn .star-3 {
+  top: 40%;
+  left: 40%;
+  width: 5px;
+}
+
+.fancy-btn .star-4 {
+  top: 20%;
+  left: 40%;
+  width: 8px;
+}
+
+.fancy-btn .star-5 {
+  top: 25%;
+  left: 45%;
+  width: 15px;
+}
+
+.fancy-btn .star-6 {
+  top: 5%;
+  left: 50%;
+  width: 5px;
+}
+
+.fancy-btn:hover {
+  background: transparent;
+  color: #fec195;
+  box-shadow: 0 0 25px #fec1958c;
+}
+
+.fancy-btn:hover .star-1 {
+  top: -80%;
+  left: -30%;
+  width: 25px;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fancy-btn:hover .star-2 {
+  top: -25%;
+  left: 10%;
+  width: 15px;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fancy-btn:hover .star-3 {
+  top: 55%;
+  left: 25%;
+  width: 5px;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fancy-btn:hover .star-4 {
+  top: 30%;
+  left: 80%;
+  width: 8px;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fancy-btn:hover .star-5 {
+  top: 25%;
+  left: 115%;
+  width: 15px;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fancy-btn:hover .star-6 {
+  top: 5%;
+  left: 60%;
+  width: 5px;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fil0 {
+  fill: #fffdef;
 }
