@@ -24,7 +24,7 @@ ChainEats is a web-based application designed to streamline the dining experienc
 1. Clone the repository.
    ```sh
    git clone https://github.com/ai-mohammed/ChainEat.git
-   cd chaineats
+   cd ChainEat
    ```
 2. Install dependencies for both frontend and backend.
    ```sh
