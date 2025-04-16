@@ -11,6 +11,7 @@ import Reservations from "./components/Reservations";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/ContactUs";
 import Footer from "./components/Footer";
+import axios from "axios";
 axios.defaults.withCredentials = true;
 type User = {
   email: string;
