@@ -1,5 +1,6 @@
 const Reservation = require("../models/Reservation");
 const Restaurant = require("../models/Restaurant");
+const { DateTime } = require("luxon");
 
 // Create a new reservation (Only Customers)
 exports.createReservation = async (req, res) => {
@@ -11,7 +12,11 @@ exports.createReservation = async (req, res) => {
       return res.status(404).json({ error: "Restaurant not found" });
     }
 
-    const reservationDatetime = new Date(`${date}T${time}`);
+    const reservationDatetime = DateTime.fromFormat(
+      `${date} ${time}`,
+      "yyyy-MM-dd HH:mm",
+      { zone: "Europe/Dublin" }
+    ).toJSDate(); // Convert to native Date
 
     // Check for reservation conflicts (pending or confirmed)
     const existingReservation = await Reservation.findOne({
