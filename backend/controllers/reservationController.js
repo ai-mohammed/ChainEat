@@ -11,10 +11,7 @@ exports.createReservation = async (req, res) => {
       return res.status(404).json({ error: "Restaurant not found" });
     }
 
-    const [year, month, day] = date.split("-").map(Number);
-    const [hour, minute] = time.split(":").map(Number);
-    const reservationDatetime = new Date(year, month - 1, day, hour, minute);
-
+    const reservationDatetime = new Date(`${date}T${time}`);
 
     // Check for reservation conflicts (pending or confirmed)
     const existingReservation = await Reservation.findOne({
