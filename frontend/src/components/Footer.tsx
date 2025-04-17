@@ -1,5 +1,5 @@
-import { FaFacebookF, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
-import "../App.css";
+import { FaFacebookF, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa"; // Import FontAwesome icons
+import "../App.css"; // Import CSS styles
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const Footer = () => {
