@@ -1,6 +1,5 @@
-/* ===============================
-   Global Layout & Typography
-   =============================== */
+/* 🌐 General body styling */
+/* Applies global font, background, and ensures the layout fills the viewport */
 body {
   font-family: "Poppins", sans-serif;
   background-color: #f4f4f9;
@@ -11,24 +10,28 @@ body {
   min-height: 100vh;
 }
 
+/* Root container */
+/* Ensures the React app (#root) also fills the viewport and can scroll */
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  /* Removed overflow: hidden to allow scrolling */
 }
 
+/* Optional main wrapper */
+/* If you wrap your content in .main-content, this prevents the navbar from overlapping */
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding-top: 100px;
+  padding-top: 100px; /* Prevent navbar overlap */
 }
 
-/* ===============================
-   Navbar Styling
-   =============================== */
+/* 🚀 Navbar styling */
+/* CSS variables for easy theming */
 :root {
   --navbar-bg: rgba(51, 51, 51, 0.9);
   --navbar-bg-hover: rgba(51, 51, 51, 1);
@@ -37,27 +40,33 @@ body {
   --transition-speed: 0.3s;
 }
 
+/* Base style for the navbar */
 .navbar {
   background-color: var(--navbar-bg);
-  padding: 10px;
+  padding: 10px 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: wrap;            /* Allow wrapping on small screens */
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  transition: background-color var(--transition-speed), padding var(--transition-speed);
+  transition:
+    background-color var(--transition-speed) ease,
+    padding var(--transition-speed) ease;
+  text-size-adjust: 40%;       /* Non-standard: adjusts text scaling on mobile */
 }
 
+/* Hover & scroll state */
 .navbar:hover,
 .navbar.scrolled {
   background-color: var(--navbar-bg-hover);
-  padding: 13px;
+  padding: 13px 13px;
 }
 
+/* Container inside navbar to center contents */
 .navbar-container {
   width: 90%;
   margin: 0 auto;
@@ -67,35 +76,39 @@ body {
   flex-wrap: wrap;
 }
 
+/* Left and right sections of navbar */
 .nav-left,
 .nav-right {
   display: flex;
   align-items: center;
 }
 
+/* Standard nav link styling */
 .nav-link {
   color: white;
   text-decoration: none;
   margin: 0 15px;
   font-size: 1.1rem;
-  transition: 0.3s;
+  transition: color var(--transition-speed);
   white-space: nowrap;
 }
 
 .nav-link:hover {
-  color: #ff6600;
+  color: var(--accent-color);
 }
 
+/* Logout & Register buttons */
 .logout-button,
 .register-button {
-  background-color: #ff6600;
+  background-color: var(--accent-color);
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 4% 2%;
+  margin-left: 0 5%;
   cursor: pointer;
   font-size: 16px;
   border-radius: 5px;
-  transition: 0.3s;
+  transition: background-color var(--transition-speed);
 }
 
 .logout-button:hover,
@@ -103,9 +116,8 @@ body {
   background-color: #e65c00;
 }
 
-/* ===============================
-   Auth Forms (Login & Register)
-   =============================== */
+/* 📥 Auth Form (Login/Register) */
+/* Centered white card for auth forms */
 .auth-form {
   display: flex;
   flex-direction: column;
@@ -117,21 +129,21 @@ body {
   max-width: 400px;
 }
 
-.auth-form input,
-.auth-form button {
+/* Inputs and buttons inside auth form */
+.auth-form input {
   padding: 10px;
   font-size: 16px;
   border-radius: 6px;
-}
-
-.auth-form input {
   border: 1px solid #ccc;
 }
 
 .auth-form button {
-  background-color: #ff6600;
+  background-color: var(--accent-color);
   color: white;
   border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
@@ -139,14 +151,54 @@ body {
   background-color: #e65c00;
 }
 
-/* ===============================
-   Hero Section (Home Page)
-   =============================== */
+/* Alternative login box */
+.login-form-box {
+  background-color: rgba(32, 30, 30, 0.825);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-form-box input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.login-form-box button {
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-form-box button:hover {
+  background-color: #e65c00;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #fbf7f7;
+  font-weight: bold;
+}
+
+/* 🌄 Hero Section */
+/* Full-screen hero with background image */
 .hero-section {
-  background-image: url("./assets/fond.png");
+  background-image: url("fond.png");
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -162,12 +214,8 @@ body {
   max-width: 80%;
 }
 
-.highlight {
-  color: #ff6600;
-}
-
 .cta-button {
-  background-color: #ff6600;
+  background-color: var(--accent-color);
   color: white;
   padding: 12px 20px;
   font-size: 18px;
@@ -175,16 +223,14 @@ body {
   cursor: pointer;
   border-radius: 5px;
   margin-top: 15px;
-  transition: background-color 0.3s;
 }
 
 .cta-button:hover {
   background-color: #e65c00;
 }
 
-/* ===============================
-   Footer
-   =============================== */
+/* 👣 Footer Base Styling */
+/* Dark background, centered text, bottom of viewport */
 .footer {
   background-color: #222;
   color: white;
@@ -197,6 +243,7 @@ body {
   margin: 0 auto;
 }
 
+/* Top part of footer with columns */
 .footer-top {
   display: flex;
   justify-content: space-between;
@@ -227,24 +274,25 @@ body {
 .footer-column ul li a {
   color: white;
   text-decoration: none;
-  transition: color 0.3s;
 }
 
 .footer-column ul li a:hover {
-  color: #ff6600;
+  color: var(--accent-color);
 }
 
+/* Social icons in footer */
 .social-icons a {
   color: white;
   font-size: 24px;
   margin-right: 15px;
-  transition: color 0.3s;
+  transition: color var(--transition-speed);
 }
 
 .social-icons a:hover {
-  color: #ff6600;
+  color: var(--accent-color);
 }
 
+/* Bottom line of footer */
 .footer-bottom {
   border-top: 1px solid #444;
   padding-top: 20px;
@@ -253,52 +301,511 @@ body {
   color: #ccc;
 }
 
-/* ===============================
-   Fancy Button Effect (Uiverse.io)
-   =============================== */
-.fancy-btn {
-  position: relative;
-  padding: 12px 35px;
-  background: #e65c00;
-  font-size: 17px;
-  font-weight: 500;
+/* 👥 About Us Page Layout */
+/* Wrapper for the entire section */
+.about-us-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  background-color: #f4f4f9;
+  overflow-x: hidden;
+}
+
+.about-team-intro-box {
+  background-color: #fff;
+  border-left: 6px solid var(--accent-color);
+  border-right: 6px solid var(--accent-color);
+  border-radius: 12px;
+  padding: 35px 30px;
+  box-shadow: 0 10px 25px rgba(255, 102, 0, 0.15);
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.about-heading {
+  font-size: 28px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 15px;
+}
+
+.about-underline {
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--accent-color);
+  border-radius: 4px;
+  margin: 10px auto 0;
+}
+
+.about-paragraph {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.about-paragraph strong {
+  color: #111;
+}
+
+.about-paragraph strong:nth-child(2),
+.about-paragraph strong:last-child {
+  color: var(--accent-color);
+}
+
+/* Team Grid – horizontal scroll on narrow screens */
+.team-grid {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: nowrap; /* force single row */
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  overflow-x: auto;
+  padding: 0 10px;
+  scrollbar-width: none; /* hide Firefox scrollbar */
+}
+
+.team-member {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(255, 102, 0, 0.15);
+  border-left: 6px solid var(--accent-color);
+  width: 240px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 420px;
+  flex-shrink: 0; /* prevent squishing */
+}
+
+.team-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 15px;
+}
+
+.team-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--accent-color);
+  margin-bottom: 6px;
+}
+
+.team-role {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.bio-text {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 8px;
+  flex-grow: 1;
+}
+
+.github-link {
   color: white;
-  border: 1px solid white;
-  border-radius: 8px;
-  box-shadow: 0 0 0 #e65c00;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
+  background-color: #222;
+  padding: 6px 14px;
+  font-size: 14px;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-speed);
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.github-link:hover {
+  background-color: #444;
+}
+
+/* Responsive tweak for team grid */
+@media (max-width: 900px) {
+  .team-grid {
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-x: hidden;
+  }
+
+  .team-member {
+    width: 90%;
+    max-width: 300px;
+  }
+}
+
+/* 🌐 Contact Page Styling */
+/* Global section styling */
+.contact {
+  padding: 100px 0;
+  background: #fff;
+  width: 100%;
+  color: #333;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.heading h2 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.heading h2 span {
+  color: var(--accent-color);
+}
+
+.heading p {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Grid layout for contact columns */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 20px;
+  justify-content: center;
+}
+
+.grid-col {
+  width: 18rem;
+  background: #f7f7f7;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s;
   overflow: hidden;
+  padding: 1rem;
 }
 
-.fancy-btn .star-1,
-.fancy-btn .star-2,
-.fancy-btn .star-3,
-.fancy-btn .star-4,
-.fancy-btn .star-5,
-.fancy-btn .star-6 {
-  position: absolute;
-  filter: drop-shadow(0 0 0 #fffdef);
-  z-index: -5;
-  transition: all 0.3s ease-in-out;
+.grid-col:hover {
+  transform: translateY(-0.5rem);
 }
 
-.fancy-btn:hover {
-  background: transparent;
-  color: #fec195;
-  box-shadow: 0 0 25px #fec1958c;
+.card-content {
+  text-align: center;
 }
 
-.fancy-btn:hover .star-1,
-.fancy-btn:hover .star-2,
-.fancy-btn:hover .star-3,
-.fancy-btn:hover .star-4,
-.fancy-btn:hover .star-5,
-.fancy-btn:hover .star-6 {
-  filter: drop-shadow(0 0 10px #fffdef);
-  z-index: 2;
+/* Left column info cards */
+.left-col .card-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
-.fil0 {
-  fill: #fffdef;
+.left-col .card-content p {
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.info-icon {
+  width: 8%;
+  height: 30px;
+  object-fit: contain;
+  margin-right: 10px;
+}
+
+/* Center column maps */
+.map-photos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10%;
+  margin-bottom: 10px;
+}
+
+.map-photo {
+  width: 90%;
+  height: auto;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.map-photo:hover {
+  transform: scale(1.05);
+}
+
+/* Right column contact form */
+.right-col .contact-box {
+  background: #f7f7f7;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.right-col .contact-heading {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.right-col .contact-subtext {
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.right-col .contact-form .form-group {
+  margin-bottom: 15px;
+}
+
+.right-col .contact-form label {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.right-col .contact-form input,
+.right-col .contact-form textarea {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.right-col .contact-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.right-col .contact-button:hover {
+  background: #e65c00;
+}
+
+/* Responsive single-column layout for small screens */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 🏠 Home Page Specific Overrides */
+/* Ensure hero section covers full viewport on home */
+.hero-section {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Reservation section styling */
+/* Wrapper containing both list and form */
+.reservation-wrapper {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 3rem 2rem;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* Title for reservation lists */
+.reservation-title {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Form container styles */
+.reservation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+/* Labels and inputs inside form */
+.reservation-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  gap: 0.5rem;
+}
+
+.reservation-form input,
+.reservation-form select {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+}
+
+/* Reserve button styling */
+.btn.reserve {
+  align-self: flex-end;
+  padding: 0.75rem 2rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+}
+
+/* Reservation cards list */
+.reservation-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+   }
+/* From Uiverse.io by MuhammadHasann */  
+.fancy-btn {  
+  position: relative;  
+  padding: 12px 35px;  
+  background: #e65c00;  
+  font-size: 17px;  
+  font-weight: 500;  
+  color: white;  
+  border: 1px solid white;  
+  border-radius: 8px;  
+  box-shadow: 0 0 0 #e65c00;  
+  transition: all 0.3s ease-in-out;  
+  cursor: pointer;  
+  overflow: hidden;  
+}  
+  
+.fancy-btn .star-1,  
+.fancy-btn .star-2,  
+.fancy-btn .star-3,  
+.fancy-btn .star-4,  
+.fancy-btn .star-5,  
+.fancy-btn .star-6 {  
+  position: absolute;  
+  filter: drop-shadow(0 0 0 #fffdef);  
+  z-index: -5;  
+  transition: all 0.3s ease-in-out;  
+}  
+  
+.fancy-btn .star-1 {  
+  top: 20%;  
+  left: 20%;  
+  width: 25px;  
+}  
+  
+.fancy-btn .star-2 {  
+  top: 45%;  
+  left: 45%;  
+  width: 15px;  
+}  
+  
+.fancy-btn .star-3 {  
+  top: 40%;  
+  left: 40%;  
+  width: 5px;  
+}  
+  
+.fancy-btn .star-4 {  
+  top: 20%;  
+  left: 40%;  
+  width: 8px;  
+}  
+  
+.fancy-btn .star-5 {  
+  top: 25%;  
+  left: 45%;  
+  width: 15px;  
+}  
+  
+.fancy-btn .star-6 {  
+  top: 5%;  
+  left: 50%;  
+  width: 5px;  
+}  
+  
+.fancy-btn:hover {  
+  background: transparent;  
+  color: #fec195;  
+  box-shadow: 0 0 25px #fec1958c;  
+}  
+  
+.fancy-btn:hover .star-1 {  
+  top: -80%;  
+  left: -30%;  
+  width: 25px;  
+  filter: drop-shadow(0 0 10px #fffdef);  
+  z-index: 2;  
+}  
+  
+.fancy-btn:hover .star-2 {  
+  top: -25%;  
+  left: 10%;  
+  width: 15px;  
+  filter: drop-shadow(0 0 10px #fffdef);  
+  z-index: 2;  
+}  
+  
+.fancy-btn:hover .star-3 {  
+  top: 55%;  
+  left: 25%;  
+  width: 5px;  
+  filter: drop-shadow(0 0 10px #fffdef);  
+  z-index: 2;  
+}  
+  
+.fancy-btn:hover .star-4 {  
+  top: 30%;  
+  left: 80%;  
+  width: 8px;  
+  filter: drop-shadow(0 0 10px #fffdef);  
+  z-index: 2;  
+}  
+  
+.fancy-btn:hover .star-5 {  
+  top: 25%;  
+  left: 115%;  
+  width: 15px;  
+  filter: drop-shadow(0 0 10px #fffdef);  
+  z-index: 2;  
+}  
+  
+.fancy-btn:hover .star-6 {  
+  top: 5%;  
+  left: 60%;  
+  width: 5px;  
+  filter: drop-shadow(0 0 10px #fffdef);  
+  z-index: 2;  
+}  
+  
+.fil0 {  
+  fill: #fffdef;  
 }
