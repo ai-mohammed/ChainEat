@@ -684,12 +684,73 @@ body {
   border-radius: 12px;
 }
 
-/* Reservation cards list */
+/* 🧾 Reservation Cards Styling */
 .reservation-card-list {
+  display: flex;              /* Vertical stack of cards */
+  flex-direction: column;
+  gap: 1.5rem;                /* Space between cards */
+  margin-top: 2rem;
+}
+
+.reservation-card {
+  background-color: white;   /* Clean white background */
+  border-radius: 16px;       /* Rounded corners */
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);  /* Subtle shadow */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;           /* Allows responsiveness */
+  gap: 1rem;
+  box-sizing: border-box;
+}
+
+.restaurant-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 0.5rem;
+}
+
+.reservation-date,
+.reservation-status,
+.reservation-user {
+  font-size: 1rem;
+  color: #666;
+  margin: 0.25rem 0;
+}
+
+/* 🎛️ Button container inside cards */
+.reservation-buttons {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-   }
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+/* ✅ Confirm & ❌ Cancel buttons */
+.btn {
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn.confirm {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn.cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
 /* From Uiverse.io by MuhammadHasann */  
 .fancy-btn {  
   position: relative;  
