@@ -28,9 +28,17 @@ function App() {
   // State to store logged-in user and loading status
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const [cookiesEnabled, setCookiesEnabled] = useState(true); // NEW STATE
   // Fetch user session when the app loads
   useEffect(() => {
+    // Detect if cookies are enabled
+    document.cookie = "testcookie=1";
+    if (document.cookie.indexOf("testcookie") === -1) {
+      setCookiesEnabled(false);
+      setLoading(false); // Stop loading to show the warning
+      return;
+    }
+
     axios
       .get(`${API_BASE}/auth/me`, { withCredentials: true })
       .then((res) => {
@@ -42,6 +50,15 @@ function App() {
         setLoading(false);
       });
   }, []);
+  // Handle blocked cookies warning FIRST
+  if (!cookiesEnabled) {
+    return (
+      <div style={{ padding: "2rem", textAlign: "center", color: "red" }}>
+        ⚠️ Your browser appears to be blocking cookies. Please enable them to
+        use the full features of this app, including logging in.
+      </div>
+    );
+  }
 
   // Logout handler
   const logout = async () => {
