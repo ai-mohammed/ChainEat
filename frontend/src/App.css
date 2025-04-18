@@ -489,15 +489,11 @@ body {
 /* Grid layout for contact columns */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, auto);
   gap: 20px;
-  flex-wrap: wrap;
-  flex-direction: row;
   justify-content: center;
 }
 
 .grid-col {
-  width: 18rem;
   background: #f7f7f7;
   border-radius: 0.75rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
