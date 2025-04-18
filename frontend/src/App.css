@@ -455,14 +455,12 @@ body {
 .contact {
   padding: 100px 0;
   background: #fff;
-  width: 90%;
-  color: #333;
   width: 100%;
-  max-width: 1200px;
+  color: #333;
 }
 
 .container {
-  width: 90%;
+  width: 100%;
   max-width: 1200px;
 }
 
@@ -493,7 +491,6 @@ body {
   grid-template-columns: repeat(3, auto);
   gap: 20px;
   justify-content: center;
-  width: 90%;
 }
 
 .grid-col {
