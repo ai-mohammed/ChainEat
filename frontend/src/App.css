@@ -633,6 +633,7 @@ body {
 /* Wrapper containing both list and form */
 .reservation-wrapper {
   max-width: 1200px;
+  width: 100%;
   margin: 3rem auto;
   padding: 3rem 2rem;
   background: white;
