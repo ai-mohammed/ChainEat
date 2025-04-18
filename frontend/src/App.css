@@ -492,6 +492,7 @@ body {
   grid-template-columns: repeat(3, auto);
   gap: 20px;
   justify-content: center;
+  width: 90%;
 }
 
 .grid-col {
