@@ -457,12 +457,12 @@ body {
   background: #fff;
   width: 100%;
   color: #333;
-  justify-content: center;
 }
 
 .container {
-  width: 100%;
+  width: 90%;
   max-width: 1200px;
+  margin: 0 auto;
 }
 
 .heading {
@@ -490,7 +490,7 @@ body {
 .grid {
   display: grid;
   grid-template-columns: repeat(3, auto);
-  gap: 1%;
+  gap: 20px;
   justify-content: center;
 }
 
@@ -617,13 +617,6 @@ body {
 
 .right-col .contact-button:hover {
   background: #e65c00;
-}
-
-/* Responsive single-column layout for small screens */
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* 🏠 Home Page Specific Overrides */
