@@ -463,7 +463,6 @@ body {
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
-  flex-wrap: wrap;
 }
 
 .heading {
@@ -492,6 +491,8 @@ body {
   display: grid;
   grid-template-columns: repeat(3, auto);
   gap: 20px;
+  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: center;
 }
 
