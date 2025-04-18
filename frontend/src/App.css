@@ -491,6 +491,10 @@ body {
   display: grid;
   gap: 20px;
   justify-content: center;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(18rem, 1fr)
+  ); /* Responsive grid */
 }
 
 .grid-col {
