@@ -490,7 +490,7 @@ body {
 .grid {
   display: grid;
   grid-template-columns: repeat(3, auto);
-  gap: 4%;
+  gap: 20px;
   justify-content: center;
   width: 90%;
 }
