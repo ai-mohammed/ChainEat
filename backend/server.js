@@ -32,6 +32,7 @@ app.use(cookieParser());
 // Configure session
 app.use(
   session({
+    proxy: true, // Use proxy settings (for HTTPS)
     // Use an environment variable for security
     secret: process.env.SESSION_SECRET,
     resave: false, // Don't save session if not modified
