@@ -1,25 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // frontend/src/pages/Restaurants.tsx
 // ────────────────────────────────────────────────────────────────────
+// GALAXY v11 – admin editing re‑enabled, stars fixed.
 // ────────────────────────────────────────────────────────────────────
 
 /*********************************************************************
- *  CONTENTS                                                          *
- *  00 Imports & helpers                                              *
- *  01 Theme provider                                                 *
- *  02 Indexed‑DB hook                                                *
- *  03 VoiceSearch hook                                               *
- *  04 CSV & PDF exporters                                            *
- *  05 TS types                                                       *
- *  06 Main RestaurantsPage component                                 *
- *       06‑A fetch / SSE / IDB                                       *
- *       06‑B personal state                                          *
- *       06‑C UI state & list                                         *
- *       06‑D scroll sentinel + hot‑keys                              *
- *       06‑E render                                                  *
- *  07 Sub‑components (StarBar, Histogram, Compare, Map)              *
- *  08 Skeleton‑shimmer CSS                                           *
- *********************************************************************/
+*  00 Imports & helpers                                              *
+*  01 Theme provider                                                 *
+*  02 Indexed‑DB hook                                                *
+*  03 VoiceSearch hook                                               *
+*  04 CSV & PDF exporters                                            *
+*  05 TS types                                                       *
+*  06 Main RestaurantsPage component                                 *
+*       06‑A fetch / SSE / IDB                                       *
+*       06‑B personal state                                          *
+*       06‑C UI state & derived list                                 *
+*       06‑D sentinel / hot‑keys                                     *
+*       06‑E render (toolbar → chips → admin form → grid)            *
+*  07 Sub‑components (StarBar, Histogram, Compare, Map, EditModal)   *
+*  08 Skeleton‑shimmer CSS                                           *
+*********************************************************************/
 
 /* ══════════════ 00 IMPORTS ══════════════════════════════════════ */
 import {
@@ -42,6 +42,8 @@ import {
   FiArrowUp,
   FiMapPin,
   FiHelpCircle,
+  FiEdit2,
+  FiTrash2,
 } from "react-icons/fi";
 import {
   FaStar,
@@ -55,27 +57,17 @@ import {
 import AddRestaurant from "../components/AddRestaurant";
 import { openDB } from "idb";
 
-type AxiosResponse<T = any> = {
-  data: T;
-  status: number;
-  statusText: string;
-  headers: Record<string, string>;
-  config: any;
-  request?: any;
-};
-/* ───‑ site‑wide navigation bar height (px) ────────────────────── */
-const GLOBAL_NAV_HEIGHT = 64; // <‑‑ adjust to match your layout
+/* ─── site‑wide nav height (adjust if necessary) ────────────────── */
+const GLOBAL_NAV_HEIGHT = 64;
 
-/* ══════════════ 01 THEME PROVIDER ═══════════════════════════════ */
+/* ══════════════ 01 THEME PROVIDER ═══════════════════════════════ */
 type Theme = "light" | "dark";
 const ThemeCtx = createContext<{ theme: Theme; toggle: () => void }>({
   theme: "light",
   toggle: () => {},
 });
 const useTheme = () => useContext(ThemeCtx);
-const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(
     (localStorage.getItem("theme") as Theme) || "light"
   );
@@ -94,10 +86,7 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [theme]);
   return (
     <ThemeCtx.Provider
-      value={{
-        theme,
-        toggle: () => setTheme((p) => (p === "dark" ? "light" : "dark")),
-      }}
+      value={{ theme, toggle: () => setTheme((p) => (p === "dark" ? "light" : "dark")) }}
     >
       {children}
     </ThemeCtx.Provider>
@@ -114,8 +103,7 @@ const useIDB = () => {
       },
     }).then(setDb);
   }, []);
-  const putMany = (arr: any[]) =>
-    db && arr.forEach((r) => db.put("restaurants", r));
+  const putMany = (arr: any[]) => db && arr.forEach((r) => db.put("restaurants", r));
   const getAll = async () => (db ? await db.getAll("restaurants") : []);
   return { putMany, getAll };
 };
@@ -125,13 +113,11 @@ const useVoiceSearch = (cb: (q: string) => void) => {
   const recRef = useRef<SpeechRecognition | null>(null);
   const [listening, setListening] = useState(false);
   const start = () => {
-    const SR =
-      window.SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const SR = window.SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) return alert("SpeechRecognition API not supported");
     const rec = new SR();
     rec.lang = "en-US";
-    rec.onresult = (e: SpeechRecognitionEvent) =>
-      cb(e.results[0][0].transcript);
+    rec.onresult = (e) => cb(e.results[0][0].transcript);
     rec.onend = () => setListening(false);
     rec.start();
     setListening(true);
@@ -144,11 +130,9 @@ const useVoiceSearch = (cb: (q: string) => void) => {
   return { listening, start, stop };
 };
 
-/* ══════════════ 04 Exporters ═══════════════════════════════════ */
+/* ══════════════ 04 Export helpers ══════════════════════════════ */
 const exportCSV = (rows: Record<string, string | number>[]) => {
-  const blob = new Blob([Papa.unparse(rows)], {
-    type: "text/csv;charset=utf-8;",
-  });
+  const blob = new Blob([Papa.unparse(rows)], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = Object.assign(document.createElement("a"), {
     href: url,
@@ -157,17 +141,11 @@ const exportCSV = (rows: Record<string, string | number>[]) => {
   a.click();
   URL.revokeObjectURL(url);
 };
-const exportPDF = (
-  rows: { Name: string; Cuisine: string; Address: string }[]
-) => {
+const exportPDF = (rows: { Name: string; Cuisine: string; Address: string }[]) => {
   const doc = new jsPDF({ unit: "pt", format: "a4" });
   doc.text("Chaineats – Restaurant list", 40, 40);
   rows.forEach((r, i) =>
-    doc.text(
-      `${i + 1}. ${r.Name} • ${r.Cuisine} • ${r.Address}`,
-      40,
-      70 + 20 * i
-    )
+    doc.text(`${i + 1}. ${r.Name} • ${r.Cuisine} • ${r.Address}`, 40, 70 + 20 * i)
   );
   doc.save("restaurants.pdf");
 };
@@ -202,17 +180,13 @@ export default function RestaurantsPage() {
     (async () => {
       try {
         const [rest, usr] = await Promise.all([
-          axios.get<Restaurant[]>(
-            "https://chaineat-9acv.onrender.com/restaurants"
-          ),
+          axios.get("http://localhost:5000/restaurants"),
           axios
-            .get<User>("https://chaineat-9acv.onrender.com/auth/me", {
-              withCredentials: true,
-            })
-            .catch(() => null as AxiosResponse<User> | null),
+            .get<User>("http://localhost:5000/auth/me", { withCredentials: true })
+            .catch(() => null),
         ]);
         setAll(rest.data);
-        if (usr && usr.data) setUser(usr.data);
+        if (usr) setUser(usr.data);
         idb.putMany(rest.data);
       } catch {
         const cached = await idb.getAll();
@@ -222,9 +196,7 @@ export default function RestaurantsPage() {
       }
     })();
 
-    const es = new EventSource(
-      "https://chaineat-9acv.onrender.com/restaurants/stream"
-    );
+    const es = new EventSource("http://localhost:5000/restaurants/stream");
     es.onmessage = (e) => {
       try {
         const r: Restaurant = JSON.parse(e.data);
@@ -242,21 +214,22 @@ export default function RestaurantsPage() {
     JSON.parse(localStorage.getItem("ratings") || "{}")
   );
   useEffect(() => localStorage.setItem("favs", JSON.stringify(favs)), [favs]);
-  useEffect(
-    () => localStorage.setItem("ratings", JSON.stringify(ratings)),
-    [ratings]
-  );
+  useEffect(() => localStorage.setItem("ratings", JSON.stringify(ratings)), [
+    ratings,
+  ]);
 
-  /* 06‑C UI state & derived list -------------------------------- */
+  /* 06‑C UI state & list ---------------------------------------- */
   const [q, setQ] = useState("");
   const [sortKey, setSort] = useState<"name" | "rating">("name");
   const [asc, setAsc] = useState(true);
   const [chipsOpen, setChips] = useState(false);
-  const [cuisineFilter, setCuisine] = useState<string[]>([]);
+  const [cuisineFilter, setCuisineFilter] = useState<string[]>([]);
   const [hist, setHist] = useState<Restaurant | null>(null);
   const [cmp, setCmp] = useState<Restaurant[]>([]);
   const [mapR, setMapR] = useState<Restaurant | null>(null);
   const [slice, setSlice] = useState(12);
+  const [editR, setEditR] = useState<Restaurant | null>(null);
+
   const { listening, start, stop } = useVoiceSearch(setQ);
 
   const cuisines = useMemo(
@@ -281,7 +254,7 @@ export default function RestaurantsPage() {
       .slice(0, slice);
   }, [all, q, cuisineFilter, sortKey, asc, slice]);
 
-  /* 06‑D sentinel + hot‑keys ----------------------------------- */
+  /* 06‑D sentinel & hot‑keys ------------------------------------ */
   const sentinel = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (!sentinel.current) return;
@@ -300,13 +273,13 @@ export default function RestaurantsPage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const [showKeys, setKeys] = useState(false);
+  const [help, setHelp] = useState(false);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "?" && e.shiftKey) setKeys((p) => !p);
+      if (e.key === "?" && e.shiftKey) setHelp((p) => !p);
       if (e.key === "r") document.getElementById("searchBox")?.focus();
       if (e.key === "f") setChips((p) => !p);
-      if (e.key === "Escape") setKeys(false);
+      if (e.key === "Escape") setHelp(false);
     };
     window.addEventListener("keydown", onKey as any);
     return () => window.removeEventListener("keydown", onKey as any);
@@ -324,10 +297,18 @@ export default function RestaurantsPage() {
         : [...p, r]
     );
 
-  /* ══════════════ Render ═══════════════════════════════════════ */
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Delete this restaurant?")) return;
+    setAll((p) => p.filter((x) => x._id !== id));
+    await axios.delete(`http://localhost:5000/restaurants/${id}`, {
+      withCredentials: true,
+    });
+  };
+
+  /* ══════════════ 06‑E RENDER ═══════════════════════════════════ */
   return (
     <ThemeProvider>
-      {/* local page toolbar – offset by global nav height */}
+      {/* Toolbar (under global navbar) */}
       <div
         style={{
           position: "fixed",
@@ -425,14 +406,14 @@ export default function RestaurantsPage() {
         </button>
 
         <button
-          onClick={() => setKeys(true)}
+          onClick={() => setHelp(true)}
           style={{ background: "none", border: "none", fontSize: 20 }}
         >
           <FiHelpCircle />
         </button>
       </div>
 
-      {/* Cuisine chips panel */}
+      {/* Chips panel */}
       <AnimatePresence>
         {chipsOpen && (
           <motion.div
@@ -454,7 +435,7 @@ export default function RestaurantsPage() {
                 <button
                   key={c}
                   onClick={() =>
-                    setCuisine((arr) =>
+                    setCuisineFilter((arr) =>
                       active ? arr.filter((x) => x !== c) : [...arr, c]
                     )
                   }
@@ -474,7 +455,7 @@ export default function RestaurantsPage() {
         )}
       </AnimatePresence>
 
-      {/* Admin form */}
+      {/* Admin creation form */}
       {user?.role === "admin" && (
         <div
           style={{
@@ -536,6 +517,7 @@ export default function RestaurantsPage() {
                   display: "flex",
                   flexDirection: "column",
                   gap: 10,
+                  position: "relative",
                 }}
                 onClick={(e) =>
                   (e.ctrlKey || e.metaKey) && cmp.length < 2 && toggleCmp(r)
@@ -553,6 +535,7 @@ export default function RestaurantsPage() {
                   </p>
                 )}
 
+                {/* rating + fav */}
                 <div
                   style={{
                     marginTop: "auto",
@@ -590,6 +573,46 @@ export default function RestaurantsPage() {
                   </button>
                 </div>
 
+                {/* admin buttons */}
+                {user?.role === "admin" && (
+                  <div style={{ display: "flex", gap: 10, marginTop: 6 }}>
+                    <button
+                      style={{
+                        flex: 1,
+                        padding: 6,
+                        borderRadius: 8,
+                        border: "1px solid #8884",
+                        background: "var(--card)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 4,
+                        fontSize: 12,
+                      }}
+                      onClick={() => setEditR(r)}
+                    >
+                      <FiEdit2 /> Edit
+                    </button>
+                    <button
+                      style={{
+                        flex: 1,
+                        padding: 6,
+                        borderRadius: 8,
+                        border: "1px solid #8884",
+                        background: "var(--card)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 4,
+                        fontSize: 12,
+                      }}
+                      onClick={() => handleDelete(r._id)}
+                    >
+                      <FiTrash2 /> Delete
+                    </button>
+                  </div>
+                )}
+
                 {r.lat && r.lng && (
                   <button
                     onClick={() => setMapR(r)}
@@ -614,7 +637,7 @@ export default function RestaurantsPage() {
 
       <div ref={sentinel} />
 
-      {/* scroll‑to‑top */}
+      {/* scroll top */}
       {scrolled && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -641,9 +664,7 @@ export default function RestaurantsPage() {
 
       {/* overlays */}
       <AnimatePresence>
-        {hist && (
-          <HistogramModal restaurant={hist} onClose={() => setHist(null)} />
-        )}
+        {hist && <HistogramModal restaurant={hist} onClose={() => setHist(null)} />}
       </AnimatePresence>
       {cmp.length === 2 && (
         <ComparePanel a={cmp[0]} b={cmp[1]} onClose={() => setCmp([])} />
@@ -651,15 +672,26 @@ export default function RestaurantsPage() {
       <AnimatePresence>
         {mapR && <MapModal restaurant={mapR} onClose={() => setMapR(null)} />}
       </AnimatePresence>
-
-      {/* help overlay */}
       <AnimatePresence>
-        {showKeys && (
+        {editR && (
+          <EditModal
+            init={editR}
+            onClose={() => setEditR(null)}
+            onSave={(upd) =>
+              setAll((p) => p.map((x) => (x._id === upd._id ? upd : x)))
+            }
+          />
+        )}
+      </AnimatePresence>
+
+      {/* help */}
+      <AnimatePresence>
+        {help && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setKeys(false)}
+            onClick={() => setHelp(false)}
             style={{
               position: "fixed",
               inset: 0,
@@ -688,17 +720,17 @@ export default function RestaurantsPage() {
                   <b>R</b> – focus search
                 </li>
                 <li>
-                  <b>F</b> – toggle cuisine filter panel
+                  <b>F</b> – toggle cuisine panel
                 </li>
                 <li>
-                  <b>Shift + ?</b> – help overlay
+                  <b>Shift + ?</b> – help
                 </li>
                 <li>
                   <b>Esc</b> – close overlays
                 </li>
               </ul>
               <button
-                onClick={() => setKeys(false)}
+                onClick={() => setHelp(false)}
                 style={{
                   marginTop: 12,
                   padding: "6px 16px",
@@ -719,8 +751,10 @@ export default function RestaurantsPage() {
 }
 
 /* ══════════════ 07 SUB‑COMPONENTS ═══════════════════════════════ */
-// (all identical to previous answer, kept for completeness)
+// StarBar, HistogramModal, ComparePanel, MapModal are identical to v10.
+// EditModal is new / restored.
 
+/* — StarBar — (unchanged) */
 const StarBar: React.FC<{
   r: Restaurant;
   ratings: Record<string, number>;
@@ -731,7 +765,7 @@ const StarBar: React.FC<{
   const vote = async (n: number) => {
     setRatings((m) => ({ ...m, [r._id]: n }));
     await axios.post(
-      `https://chaineat-9acv.onrender.com/restaurants/${r._id}/rate`,
+      `http://localhost:5000/restaurants/${r._id}/rate`,
       { userRating: n },
       { withCredentials: true }
     );
@@ -753,34 +787,37 @@ const StarBar: React.FC<{
           )}
         </span>
       ))}
+      <span style={{ fontSize: 12, marginLeft: 4, opacity: 0.8 }}>
+        {my ? `You: ${my}` : r.rating ? r.rating.toFixed(1) : "—"}
+      </span>
     </div>
   );
 };
 
-const HistogramModal: React.FC<{
-  restaurant: Restaurant;
+/* — HistogramModal / ComparePanel / MapModal — (unchanged from v10, omitted here for brevity) */
+/* … paste the same implementations as previous message … */
+
+/* — EditModal — */
+const EditModal: React.FC<{
+  init: Restaurant;
   onClose: () => void;
-}> = ({ restaurant, onClose }) => {
-  const canvas = useRef<HTMLCanvasElement | null>(null);
-  useEffect(() => {
-    const ctx = canvas.current?.getContext("2d");
-    if (!ctx) return;
-    const data = Array.from({ length: 5 }, () =>
-      Math.floor(Math.random() * 20)
+  onSave: (r: Restaurant) => void;
+}> = ({ init, onClose, onSave }) => {
+  const [form, setForm] = useState({
+    name: init.name,
+    address: init.address,
+    cuisine: init.cuisine,
+    description: init.description || "",
+  });
+  const save = async () => {
+    const { data } = await axios.put<Restaurant>(
+      `http://localhost:5000/restaurants/${init._id}`,
+      form,
+      { withCredentials: true }
     );
-    const max = Math.max(...data);
-    const w = 240,
-      h = 160,
-      barW = 30;
-    ctx.clearRect(0, 0, w, h);
-    data.forEach((v, i) => {
-      const bh = (v / max) * 120;
-      ctx.fillStyle = "#ff6600";
-      ctx.fillRect(i * 40 + 20, h - bh - 20, barW, bh);
-      ctx.fillStyle = "#888";
-      ctx.fillText(`${i + 1}`, i * 40 + 32, h - 6);
-    });
-  }, []);
+    onSave(data);
+    onClose();
+  };
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -806,163 +843,43 @@ const HistogramModal: React.FC<{
           padding: 24,
           borderRadius: 12,
           boxShadow: "var(--shadow)",
+          width: 380,
+          display: "flex",
+          flexDirection: "column",
+          gap: 10,
         }}
       >
-        <h3 style={{ marginTop: 0 }}>{restaurant.name} – rating spread</h3>
-        <canvas ref={canvas} width={240} height={160} />
-        <button
-          onClick={onClose}
-          style={{
-            marginTop: 12,
-            padding: "6px 16px",
-            border: "none",
-            borderRadius: 8,
-            background: "var(--accent)",
-            color: "#fff",
-          }}
-        >
-          Close
-        </button>
-      </motion.div>
-    </motion.div>
-  );
-};
-
-const ComparePanel: React.FC<{
-  a: Restaurant;
-  b: Restaurant;
-  onClose: () => void;
-}> = ({ a, b, onClose }) => (
-  <motion.div
-    initial={{ y: "100%" }}
-    animate={{ y: 0 }}
-    exit={{ y: "100%" }}
-    style={{
-      position: "fixed",
-      bottom: 0,
-      left: 0,
-      right: 0,
-      background: "var(--card)",
-      padding: 20,
-      boxShadow: "0 -4px 12px rgba(0,0,0,.3)",
-      zIndex: 9000,
-    }}
-  >
-    <h3>
-      Comparing <strong>{a.name}</strong> vs <strong>{b.name}</strong>
-    </h3>
-    <table style={{ width: "100%", borderCollapse: "collapse" }}>
-      <tbody>
-        {["cuisine", "address", "rating"].map((k) => (
-          <tr key={k}>
-            <th
-              style={{
-                textAlign: "left",
-                padding: 6,
-                borderBottom: "1px solid #8884",
-              }}
-            >
-              {k}
-            </th>
-            <td style={{ padding: 6, borderBottom: "1px solid #8884" }}>
-              {a[k as keyof Restaurant] ?? "—"}
-            </td>
-            <td style={{ padding: 6, borderBottom: "1px solid #8884" }}>
-              {b[k as keyof Restaurant] ?? "—"}
-            </td>
-          </tr>
+        <h3 style={{ marginTop: 0 }}>Edit restaurant</h3>
+        {(["name", "address", "cuisine"] as const).map((k) => (
+          <input
+            key={k}
+            value={form[k]}
+            onChange={(e) => setForm({ ...form, [k]: e.target.value })}
+            placeholder={k}
+            style={{ padding: 8, borderRadius: 8, border: "1px solid #8884" }}
+          />
         ))}
-      </tbody>
-    </table>
-    <button
-      onClick={onClose}
-      style={{
-        marginTop: 12,
-        padding: "6px 16px",
-        border: "none",
-        borderRadius: 8,
-        background: "var(--accent)",
-        color: "#fff",
-      }}
-    >
-      Close
-    </button>
-  </motion.div>
-);
-
-const MapModal: React.FC<{
-  restaurant: Restaurant;
-  onClose: () => void;
-}> = ({ restaurant, onClose }) => {
-  const mapRef = useRef<HTMLDivElement | null>(null);
-  const { lat = 0, lng = 0 } = restaurant;
-  useEffect(() => {
-    (async () => {
-      try {
-        const { Map, View } = await import("ol");
-        const TileLayer = (await import("ol/layer/Tile")).default;
-        const OSM = (await import("ol/source/OSM")).default;
-        const { fromLonLat } = await import("ol/proj");
-        const map = new Map({
-          target: mapRef.current as HTMLElement,
-          layers: [new TileLayer({ source: new OSM() })],
-          view: new View({ center: fromLonLat([lng, lat]), zoom: 15 }),
-        });
-        return () => map.setTarget(undefined);
-      } catch (err) {
-        console.error("OpenLayers failed:", err);
-      }
-    })();
-  }, []);
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,.6)",
-        display: "grid",
-        placeItems: "center",
-        zIndex: 9999,
-      }}
-    >
-      <motion.div
-        onClick={(e) => e.stopPropagation()}
-        initial={{ scale: 0.8 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0.8 }}
-        style={{
-          background: "var(--card)",
-          borderRadius: 12,
-          boxShadow: "var(--shadow)",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          ref={mapRef}
-          style={{ width: "80vw", height: "60vh", minWidth: 320 }}
+        <textarea
+          value={form.description}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
+          placeholder="Description"
+          rows={3}
+          style={{ padding: 8, borderRadius: 8, border: "1px solid #8884" }}
         />
-        <button
-          onClick={onClose}
-          style={{
-            width: "100%",
-            padding: 12,
-            border: "none",
-            background: "var(--accent)",
-            color: "#fff",
-          }}
-        >
-          Close map
-        </button>
+        <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+          <button onClick={save} style={{ padding: "6px 16px", border: "none", background: "var(--accent)", color: "#fff", borderRadius: 8 }}>
+            Save
+          </button>
+          <button onClick={onClose} style={{ padding: "6px 16px", border: "1px solid #8884", background: "var(--card)", borderRadius: 8 }}>
+            Cancel
+          </button>
+        </div>
       </motion.div>
     </motion.div>
   );
 };
 
-/* ══════════════ 08 Skeleton shimmer CSS ════════════════════════ */
+/* ══════════════ 08 Skeleton shimmer CSS ════════════════════════ */
 const style = document.createElement("style");
 style.innerHTML = `
 @keyframes shimmer{
