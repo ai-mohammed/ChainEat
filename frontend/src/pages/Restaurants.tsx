@@ -4,22 +4,22 @@
 // ────────────────────────────────────────────────────────────────────
 
 /*********************************************************************
-*  CONTENTS                                                          *
-*  00 Imports & helpers                                              *
-*  01 Theme provider                                                 *
-*  02 Indexed‑DB hook                                                *
-*  03 VoiceSearch hook                                               *
-*  04 CSV & PDF exporters                                            *
-*  05 TS types                                                       *
-*  06 Main RestaurantsPage component                                 *
-*       06‑A fetch / SSE / IDB                                       *
-*       06‑B personal state                                          *
-*       06‑C UI state & list                                         *
-*       06‑D scroll sentinel + hot‑keys                              *
-*       06‑E render                                                  *
-*  07 Sub‑components (StarBar, Histogram, Compare, Map)              *
-*  08 Skeleton‑shimmer CSS                                           *
-*********************************************************************/
+ *  CONTENTS                                                          *
+ *  00 Imports & helpers                                              *
+ *  01 Theme provider                                                 *
+ *  02 Indexed‑DB hook                                                *
+ *  03 VoiceSearch hook                                               *
+ *  04 CSV & PDF exporters                                            *
+ *  05 TS types                                                       *
+ *  06 Main RestaurantsPage component                                 *
+ *       06‑A fetch / SSE / IDB                                       *
+ *       06‑B personal state                                          *
+ *       06‑C UI state & list                                         *
+ *       06‑D scroll sentinel + hot‑keys                              *
+ *       06‑E render                                                  *
+ *  07 Sub‑components (StarBar, Histogram, Compare, Map)              *
+ *  08 Skeleton‑shimmer CSS                                           *
+ *********************************************************************/
 
 /* ══════════════ 00 IMPORTS ══════════════════════════════════════ */
 import {
@@ -55,6 +55,14 @@ import {
 import AddRestaurant from "../components/AddRestaurant";
 import { openDB } from "idb";
 
+type AxiosResponse<T = any> = {
+  data: T;
+  status: number;
+  statusText: string;
+  headers: Record<string, string>;
+  config: any;
+  request?: any;
+};
 /* ───‑ site‑wide navigation bar height (px) ────────────────────── */
 const GLOBAL_NAV_HEIGHT = 64; // <‑‑ adjust to match your layout
 
@@ -65,7 +73,9 @@ const ThemeCtx = createContext<{ theme: Theme; toggle: () => void }>({
   toggle: () => {},
 });
 const useTheme = () => useContext(ThemeCtx);
-const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [theme, setTheme] = useState<Theme>(
     (localStorage.getItem("theme") as Theme) || "light"
   );
@@ -84,7 +94,10 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   }, [theme]);
   return (
     <ThemeCtx.Provider
-      value={{ theme, toggle: () => setTheme((p) => (p === "dark" ? "light" : "dark")) }}
+      value={{
+        theme,
+        toggle: () => setTheme((p) => (p === "dark" ? "light" : "dark")),
+      }}
     >
       {children}
     </ThemeCtx.Provider>
@@ -101,7 +114,8 @@ const useIDB = () => {
       },
     }).then(setDb);
   }, []);
-  const putMany = (arr: any[]) => db && arr.forEach((r) => db.put("restaurants", r));
+  const putMany = (arr: any[]) =>
+    db && arr.forEach((r) => db.put("restaurants", r));
   const getAll = async () => (db ? await db.getAll("restaurants") : []);
   return { putMany, getAll };
 };
@@ -111,11 +125,13 @@ const useVoiceSearch = (cb: (q: string) => void) => {
   const recRef = useRef<SpeechRecognition | null>(null);
   const [listening, setListening] = useState(false);
   const start = () => {
-    const SR = window.SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const SR =
+      window.SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) return alert("SpeechRecognition API not supported");
     const rec = new SR();
     rec.lang = "en-US";
-    rec.onresult = (e) => cb(e.results[0][0].transcript);
+    rec.onresult = (e: SpeechRecognitionEvent) =>
+      cb(e.results[0][0].transcript);
     rec.onend = () => setListening(false);
     rec.start();
     setListening(true);
@@ -130,7 +146,9 @@ const useVoiceSearch = (cb: (q: string) => void) => {
 
 /* ══════════════ 04 Exporters ═══════════════════════════════════ */
 const exportCSV = (rows: Record<string, string | number>[]) => {
-  const blob = new Blob([Papa.unparse(rows)], { type: "text/csv;charset=utf-8;" });
+  const blob = new Blob([Papa.unparse(rows)], {
+    type: "text/csv;charset=utf-8;",
+  });
   const url = URL.createObjectURL(blob);
   const a = Object.assign(document.createElement("a"), {
     href: url,
@@ -139,11 +157,17 @@ const exportCSV = (rows: Record<string, string | number>[]) => {
   a.click();
   URL.revokeObjectURL(url);
 };
-const exportPDF = (rows: { Name: string; Cuisine: string; Address: string }[]) => {
+const exportPDF = (
+  rows: { Name: string; Cuisine: string; Address: string }[]
+) => {
   const doc = new jsPDF({ unit: "pt", format: "a4" });
   doc.text("Chaineats – Restaurant list", 40, 40);
   rows.forEach((r, i) =>
-    doc.text(`${i + 1}. ${r.Name} • ${r.Cuisine} • ${r.Address}`, 40, 70 + 20 * i)
+    doc.text(
+      `${i + 1}. ${r.Name} • ${r.Cuisine} • ${r.Address}`,
+      40,
+      70 + 20 * i
+    )
   );
   doc.save("restaurants.pdf");
 };
@@ -178,13 +202,17 @@ export default function RestaurantsPage() {
     (async () => {
       try {
         const [rest, usr] = await Promise.all([
-          axios.get("http://localhost:5000/restaurants"),
+          axios.get<Restaurant[]>(
+            "https://chaineat-9acv.onrender.com/restaurants"
+          ),
           axios
-            .get<User>("http://localhost:5000/auth/me", { withCredentials: true })
-            .catch(() => null),
+            .get<User>("https://chaineat-9acv.onrender.com/auth/me", {
+              withCredentials: true,
+            })
+            .catch(() => null as AxiosResponse<User> | null),
         ]);
         setAll(rest.data);
-        if (usr) setUser(usr.data);
+        if (usr && usr.data) setUser(usr.data);
         idb.putMany(rest.data);
       } catch {
         const cached = await idb.getAll();
@@ -194,7 +222,9 @@ export default function RestaurantsPage() {
       }
     })();
 
-    const es = new EventSource("http://localhost:5000/restaurants/stream");
+    const es = new EventSource(
+      "https://chaineat-9acv.onrender.com/restaurants/stream"
+    );
     es.onmessage = (e) => {
       try {
         const r: Restaurant = JSON.parse(e.data);
@@ -212,9 +242,10 @@ export default function RestaurantsPage() {
     JSON.parse(localStorage.getItem("ratings") || "{}")
   );
   useEffect(() => localStorage.setItem("favs", JSON.stringify(favs)), [favs]);
-  useEffect(() => localStorage.setItem("ratings", JSON.stringify(ratings)), [
-    ratings,
-  ]);
+  useEffect(
+    () => localStorage.setItem("ratings", JSON.stringify(ratings)),
+    [ratings]
+  );
 
   /* 06‑C UI state & derived list -------------------------------- */
   const [q, setQ] = useState("");
@@ -239,7 +270,9 @@ export default function RestaurantsPage() {
           .toLowerCase()
           .includes(q.toLowerCase())
       )
-      .filter((r) => (cuisineFilter.length ? cuisineFilter.includes(r.cuisine) : true))
+      .filter((r) =>
+        cuisineFilter.length ? cuisineFilter.includes(r.cuisine) : true
+      )
       .sort((a, b) => {
         const aV = sortKey === "name" ? a.name : a.rating ?? 0;
         const bV = sortKey === "name" ? b.name : b.rating ?? 0;
@@ -608,7 +641,9 @@ export default function RestaurantsPage() {
 
       {/* overlays */}
       <AnimatePresence>
-        {hist && <HistogramModal restaurant={hist} onClose={() => setHist(null)} />}
+        {hist && (
+          <HistogramModal restaurant={hist} onClose={() => setHist(null)} />
+        )}
       </AnimatePresence>
       {cmp.length === 2 && (
         <ComparePanel a={cmp[0]} b={cmp[1]} onClose={() => setCmp([])} />
@@ -696,7 +731,7 @@ const StarBar: React.FC<{
   const vote = async (n: number) => {
     setRatings((m) => ({ ...m, [r._id]: n }));
     await axios.post(
-      `http://localhost:5000/restaurants/${r._id}/rate`,
+      `https://chaineat-9acv.onrender.com/restaurants/${r._id}/rate`,
       { userRating: n },
       { withCredentials: true }
     );
@@ -730,7 +765,9 @@ const HistogramModal: React.FC<{
   useEffect(() => {
     const ctx = canvas.current?.getContext("2d");
     if (!ctx) return;
-    const data = Array.from({ length: 5 }, () => Math.floor(Math.random() * 20));
+    const data = Array.from({ length: 5 }, () =>
+      Math.floor(Math.random() * 20)
+    );
     const max = Math.max(...data);
     const w = 240,
       h = 160,
@@ -904,7 +941,10 @@ const MapModal: React.FC<{
           overflow: "hidden",
         }}
       >
-        <div ref={mapRef} style={{ width: "80vw", height: "60vh", minWidth: 320 }} />
+        <div
+          ref={mapRef}
+          style={{ width: "80vw", height: "60vh", minWidth: 320 }}
+        />
         <button
           onClick={onClose}
           style={{
